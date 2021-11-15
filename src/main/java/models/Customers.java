@@ -15,19 +15,18 @@ import java.util.List;
 @Entity
 @Table
 @Builder
-@Log4j
 public class Customers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column
     private String firstname;
 
     private String lastname;
 
-    private  String email;
+    private String email;
 
     private String password;
 

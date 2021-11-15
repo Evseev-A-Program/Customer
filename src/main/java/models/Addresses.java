@@ -15,12 +15,11 @@ import javax.persistence.*;
 @Entity
 @Table
 @Builder
-@Log4j
 public class Addresses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column
     private String city;
