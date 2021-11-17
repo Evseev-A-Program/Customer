@@ -2,6 +2,7 @@ package com.example.customer.controllers;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
+import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity updateCustomer(@RequestBody Customer customer){
         try{
             customerService.updateCustomerById(customer);
@@ -59,7 +60,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity deleteCustomer(@RequestParam Long id){
         try{
             customerService.deleteCustomersById(id);
@@ -71,22 +72,19 @@ public class CustomerController {
         }
     }
 
-
-//
-//    @Autowired
-//    public CustomersController(CustomersService customersService) {
-//        this.customersService = customersService;
+//    @PostMapping("/add/paidtype")
+//    public ResponseEntity addPaidTypeCustomer(@RequestParam Long idCustomer, Long idPaidType){
+//        try{
+//            customerService.addPaidTypeCustomer(idCustomer, idPaidType);
+//            return ResponseEntity.ok("PaidType added to the Customers< id " + idCustomer);
+//        } catch (PaidTypeNotFoundException e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        } catch (CustomerNotFoundException e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        } catch (Exception e){
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
 //    }
-//
-//    @GetMapping(value = "/customers/all")
-//    public ResponseEntity<List<Customers>> read() {
-//        List<Customers> clients = (List<Customers>) customersService.findAllCustomers();
-//
-//        return clients != null &&  !clients.isEmpty()
-//                ? new ResponseEntity<>(clients, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
 
 
 }

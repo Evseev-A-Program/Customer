@@ -33,13 +33,12 @@ public class Customer {
     private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="address_id")
-    private Address addressId;
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaidType> paidTypeList;
 
     public Customer() {
-
     }
 }

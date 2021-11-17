@@ -1,7 +1,12 @@
 package com.example.customer.service;
 
+import com.example.customer.controllers.PaidTypeController;
+import com.example.customer.exception.CustomerNotFoundException;
+import com.example.customer.exception.PaidTypeIncorrectException;
+import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.models.PaidType;
+import com.example.customer.models.ePaidType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.PaidTypeDao;
@@ -15,7 +20,11 @@ public class PaidTypeService {
     @Autowired
     private PaidTypeDao paidTypeDao;
 
-    public Optional<PaidType> findPaidTypeById(Long id) {
+    public Optional<PaidType> findPaidTypeById(Long id) throws PaidTypeNotFoundException {
+        PaidType paidType = paidTypeDao.findById(id).get();
+        if (paidType == null) {
+            throw new PaidTypeNotFoundException("PaidType Not Found");
+        }
         return paidTypeDao.findById(id);
     }
 
@@ -31,8 +40,16 @@ public class PaidTypeService {
         paidTypeDao.deleteAll();
     }
 
-    public void savePaidType(PaidType paidType) {
-        paidTypeDao.save(paidType);
+    public void savePaidType(PaidType paidType) throws PaidTypeIncorrectException {
+        Boolean correctName = false;
+
+        for (ePaidType e : ePaidType.values()){
+            if (e.name().equals(paidType.getName())) correctName = true;
+        }
+
+        if(correctName == true) paidTypeDao.save(paidType);
+        else throw new PaidTypeIncorrectException("PaidType Incorrect");
+
     }
 
     public void updateNamePaidTypeById(Long id, String name) {
