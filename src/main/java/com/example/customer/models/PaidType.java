@@ -1,17 +1,14 @@
-package models;
+package com.example.customer.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j;
+import lombok.*;
+
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 @Entity
 @Table
 @Builder
@@ -25,8 +22,8 @@ public class PaidType {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customers_id")
-    private Customers customers;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public PaidType() {
 

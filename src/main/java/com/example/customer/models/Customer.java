@@ -1,10 +1,7 @@
-package models;
+package com.example.customer.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,10 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 @Entity
 @Table
 @Builder
-public class Customers {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,20 +24,22 @@ public class Customers {
 
     private String lastname;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
 
-    private String phone_number;
+    @Column(unique = true)
+    private String phoneNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="addresses_id")
-    private Addresses addressId;
+    @JoinColumn(name="address_id")
+    private Address addressId;
 
-    @OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaidType> paidTypeList;
 
-    public Customers() {
+    public Customer() {
 
     }
 }

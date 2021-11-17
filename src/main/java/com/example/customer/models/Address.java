@@ -1,11 +1,8 @@
-package models;
+package com.example.customer.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j;
+import lombok.*;
+
 import javax.persistence.*;
 
 
@@ -13,9 +10,10 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @Entity
+@ToString
 @Table
 @Builder
-public class Addresses {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +26,7 @@ public class Addresses {
 
     private String country;
 
-    public Addresses() {
+    public Address() {
 
     }
 }
