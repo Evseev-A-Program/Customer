@@ -48,6 +48,11 @@ public class CustomerService {
         return customersDao.save(customer);
     }
 
-
+    public void updateCustomerById(Customer customer) throws CustomerNotFoundException {
+        if (customer == null) {
+            throw new CustomerNotFoundException("Customer Not Found");
+        }
+        customersDao.save(customer);
+    }
 
 }

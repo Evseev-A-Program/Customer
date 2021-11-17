@@ -31,12 +31,26 @@ public class CustomerController {
     public ResponseEntity getOneCustomer(@RequestParam Long id){
         try{
             return ResponseEntity.ok(customerService.findCustomerById(id));
-        }catch (CustomerNotFoundException e){
+        } catch (CustomerNotFoundException e){
             return ResponseEntity.badRequest().body((e.getMessage()));
         } catch (Exception e){
             return ResponseEntity.badRequest().body("ERROR!!!");
         }
     }
+
+    @PostMapping
+    public ResponseEntity updateCustomer(@RequestBody Customer customer){
+        try{
+            customerService.updateCustomerById(customer);
+            return ResponseEntity.ok("Customer update");
+        } catch (CustomerNotFoundException e){
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
 //
 //    @Autowired
 //    public CustomersController(CustomersService customersService) {
