@@ -35,30 +35,21 @@ public class CustomerService {
         customersDao.deleteById(id);
     }
 
-    public Customer saveCustomers(Customer customer) throws CustomerAlreadyExistException {
-//        if(customersDao.findByEmail(customer.getEmail()) != null) {
-//            throw new CustomerAlreadyExistException("This email is already in use");
-//        }
-//        if( customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
-//            throw new CustomerAlreadyExistException("This phone number is already in use");
-//        }
-        return customersDao.save(customer);
-    }
-
-
-    public void updateCustomerById(Customer customer) throws CustomerNotFoundException, CustomerAlreadyExistException {
+    public void saveCustomers(Customer customer) throws CustomerAlreadyExistException, CustomerNotFoundException {
         if (customer == null) {
             throw new CustomerNotFoundException("Customer Not Found");
         }
-//
-//        if(customersDao.findByEmail(customer.getEmail()) != null) {
-//            throw new CustomerAlreadyExistException("This email is already in use");
-//        }
-//        if(customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
-//            throw new CustomerAlreadyExistException("This phone number is already in use");
-//        }
 
+        Customer checkCustomer = customersDao.findByEmail(customer.getEmail());
+        if(checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
+            throw new CustomerAlreadyExistException("This email is already in use");
+        }
+        checkCustomer = customersDao.findByPhoneNumber(customer.getPhoneNumber());
+        if( checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
+            throw new CustomerAlreadyExistException("This phone number is already in use");
+        }
         customersDao.save(customer);
     }
+
 
 }

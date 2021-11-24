@@ -38,14 +38,15 @@ public class Customer {
     private Address address;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
+    @JoinTable(joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
     private Set<PaidType> paidTypes;
 
-    public void addPaidType() {
-        paidTypes.forEach(paidType -> paidType.getCustomers().add(this));
+    public void addPaidType(PaidType paidType) {
+        paidTypes.add(paidType);
     }
 
-    public void deletePaidType(){
+    public void deletePaidType() {
         paidTypes.forEach(paidType -> paidType.getCustomers().remove(this));
     }
 

@@ -50,7 +50,7 @@ public class CustomerController {
     @PutMapping("/update")
     public ResponseEntity updateCustomer(@RequestBody Customer customer){
         try{
-            customerService.updateCustomerById(customer);
+            customerService.saveCustomers(customer);
             return ResponseEntity.ok("Customer update");
         } catch (CustomerNotFoundException e){
             return ResponseEntity.badRequest().body((e.getMessage()));

@@ -37,12 +37,9 @@ public class PaidTypeService {
     }
 
     public void deletePaidTypeById(Long id) throws PaidTypeNotFoundException, PaidTypeLinkedToUserException {
-        PaidType paidType = paidTypeDao.findById(id).get();
-        if (paidType == null) {
-            throw new PaidTypeNotFoundException("PaidType Not Found");
-        }
+        PaidType paidType = findPaidTypeById(id);
 
-        if (paidType.getCustomers().equals(null)) {
+        if (!paidType.getCustomers().isEmpty()) {
             throw new PaidTypeLinkedToUserException("PaidType is already linked to the user");
         }
         paidTypeDao.deleteById(id);
@@ -57,7 +54,7 @@ public class PaidTypeService {
 
         PaidType paidTypeNew = PaidType.builder().name(name).build();
         paidTypeDao.save(paidTypeNew);
-        customer.addPaidType();
+        customer.addPaidType(paidTypeNew);
         customerService.saveCustomers(customer);
 
 //        boolean correctName = false;
