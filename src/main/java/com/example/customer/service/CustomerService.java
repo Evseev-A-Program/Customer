@@ -48,6 +48,7 @@ public class CustomerService {
         if( checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
             throw new CustomerAlreadyExistException("This phone number is already in use");
         }
+
         customersDao.save(customer);
     }
 

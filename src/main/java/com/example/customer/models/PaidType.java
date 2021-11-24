@@ -26,6 +26,7 @@ public class PaidType {
     private EPaidType name;
 
     @ManyToMany(mappedBy = "paidTypes")
+    @JsonIgnore
     private Set<Customer> customers;
 
     public PaidType() {
