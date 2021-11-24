@@ -2,17 +2,11 @@ package com.example.customer.service;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.exception.PaidTypeNotFoundException;
-import com.example.customer.models.Address;
 import com.example.customer.models.Customer;
-import com.example.customer.models.PaidType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.CustomerDao;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -37,43 +31,33 @@ public class CustomerService {
         if (customer == null) {
             throw new CustomerNotFoundException("Customer Not Found");
         }
+        customer.deletePaidType();
         customersDao.deleteById(id);
     }
 
-    public void deleteCustomersAll(){
-        customersDao.deleteAll();
-    }
-
     public Customer saveCustomers(Customer customer) throws CustomerAlreadyExistException {
-        if(customersDao.findByEmail(customer.getEmail()) != null) {
-            throw new CustomerAlreadyExistException("This email is already in use");
-        }
-        if( customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
-            throw new CustomerAlreadyExistException("This phone number is already in use");
-        }
+//        if(customersDao.findByEmail(customer.getEmail()) != null) {
+//            throw new CustomerAlreadyExistException("This email is already in use");
+//        }
+//        if( customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
+//            throw new CustomerAlreadyExistException("This phone number is already in use");
+//        }
         return customersDao.save(customer);
     }
 
-//    public void addPaidTypeCustomer(Long idCustomer, Long idPaidType) throws PaidTypeNotFoundException, CustomerNotFoundException {
-//        PaidType paidType = new PaidTypeService().findPaidTypeById(idPaidType).get();
-//        if (paidType == null) {
-//            throw new PaidTypeNotFoundException("PaidType Not Found");
-//        }
-//        Customer customer = findCustomerById(idCustomer);
-//        customer.setPaidTypeList(paidType);
-//        customersDao.save(findCustomerById(idCustomer));
-//    }
 
     public void updateCustomerById(Customer customer) throws CustomerNotFoundException, CustomerAlreadyExistException {
         if (customer == null) {
             throw new CustomerNotFoundException("Customer Not Found");
         }
-        if(customersDao.findByEmail(customer.getEmail()) != null) {
-            throw new CustomerAlreadyExistException("This email is already in use");
-        }
-        if(customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
-            throw new CustomerAlreadyExistException("This phone number is already in use");
-        }
+//
+//        if(customersDao.findByEmail(customer.getEmail()) != null) {
+//            throw new CustomerAlreadyExistException("This email is already in use");
+//        }
+//        if(customersDao.findByPhoneNumber(customer.getPhoneNumber()) != null) {
+//            throw new CustomerAlreadyExistException("This phone number is already in use");
+//        }
+
         customersDao.save(customer);
     }
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -36,8 +37,17 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PaidType> paidTypeList;
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
+    private Set<PaidType> paidTypes;
+
+    public void addPaidType() {
+        paidTypes.forEach(paidType -> paidType.getCustomers().add(this));
+    }
+
+    public void deletePaidType(){
+        paidTypes.forEach(paidType -> paidType.getCustomers().remove(this));
+    }
 
     public Customer() {
     }

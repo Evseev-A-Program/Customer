@@ -1,8 +1,11 @@
 package com.example.customer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -19,11 +22,11 @@ public class PaidType {
     private Long id;
 
     @Column
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private EPaidType name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @ManyToMany(mappedBy = "paidTypes")
+    private Set<Customer> customers;
 
     public PaidType() {
 

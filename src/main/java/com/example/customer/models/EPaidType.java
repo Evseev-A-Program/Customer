@@ -1,6 +1,6 @@
 package com.example.customer.models;
 
-public enum ePaidType {
+public enum EPaidType {
     Credit,
     Cash,
     Terminals,

@@ -2,7 +2,6 @@ package com.example.customer.controllers;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-//
+
     @GetMapping("/get")
     public ResponseEntity getOneCustomer(@RequestParam Long id){
         try{
@@ -60,8 +59,8 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteCustomer(@RequestParam Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteCustomer(@PathVariable Long id){
         try{
             customerService.deleteCustomersById(id);
             return ResponseEntity.ok("Customer delete");

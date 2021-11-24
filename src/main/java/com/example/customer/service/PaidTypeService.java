@@ -1,18 +1,14 @@
 package com.example.customer.service;
 
-import com.example.customer.controllers.PaidTypeController;
-import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.exception.PaidTypeIncorrectException;
-import com.example.customer.exception.PaidTypeNotFoundException;
+import com.example.customer.exception.*;
 import com.example.customer.models.Customer;
 import com.example.customer.models.PaidType;
-import com.example.customer.models.ePaidType;
+import com.example.customer.models.EPaidType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.PaidTypeDao;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class PaidTypeService {
@@ -20,45 +16,65 @@ public class PaidTypeService {
     @Autowired
     private PaidTypeDao paidTypeDao;
 
-    public Optional<PaidType> findPaidTypeById(Long id) throws PaidTypeNotFoundException {
+    @Autowired
+    private CustomerService customerService;
+
+    public PaidType findPaidTypeById(Long id) throws PaidTypeNotFoundException {
         PaidType paidType = paidTypeDao.findById(id).get();
         if (paidType == null) {
             throw new PaidTypeNotFoundException("PaidType Not Found");
         }
-        return paidTypeDao.findById(id);
+        return paidType;
+    }
+
+    public Iterable<PaidType> findPaidTypeByIdCustomer(Long id) throws CustomerNotFoundException {
+        Customer customer = customerService.findCustomerById(id);
+        return customer.getPaidTypes();
     }
 
     public Iterable<PaidType> findAllPaidTypes(){
         return  paidTypeDao.findAll();
     }
 
-    public void deletePaidTypeById(Long id){
+    public void deletePaidTypeById(Long id) throws PaidTypeNotFoundException, PaidTypeLinkedToUserException {
+        PaidType paidType = paidTypeDao.findById(id).get();
+        if (paidType == null) {
+            throw new PaidTypeNotFoundException("PaidType Not Found");
+        }
+
+        if (paidType.getCustomers().equals(null)) {
+            throw new PaidTypeLinkedToUserException("PaidType is already linked to the user");
+        }
         paidTypeDao.deleteById(id);
     }
 
-    public void deletePaidTypeAll(){
-        paidTypeDao.deleteAll();
+    public void savePaidType(String paidType, Long customerId) throws CustomerNotFoundException, CustomerAlreadyExistException, PaidTypeAlreadyExistException {
+
+        EPaidType name = EPaidType.valueOf(paidType);
+        if (paidTypeDao.findByName(name) != null) throw new PaidTypeAlreadyExistException("PaidType already exists");
+
+        Customer customer = customerService.findCustomerById(customerId);
+
+        PaidType paidTypeNew = PaidType.builder().name(name).build();
+        paidTypeDao.save(paidTypeNew);
+        customer.addPaidType();
+        customerService.saveCustomers(customer);
+
+//        boolean correctName = false;
+//        for (EPaidType e : EPaidType.values()){
+//            if (e.name().equals(paidType)) {
+//                correctName = true;
+//                break;
+//            }
+//        }
+
+//        if(correctName) {
+//            Customer customer = customerService.findCustomerById(customerId);
+//            paidType.setCustomer(customer);
+//            paidTypeDao.save(paidType);
+//        }
+//        else throw new PaidTypeIncorrectException("PaidType Incorrect");
     }
 
-    public void savePaidType(PaidType paidType) throws PaidTypeIncorrectException {
-        Boolean correctName = false;
-
-        for (ePaidType e : ePaidType.values()){
-            if (e.name().equals(paidType.getName())) correctName = true;
-        }
-
-        if(correctName == true) paidTypeDao.save(paidType);
-        else throw new PaidTypeIncorrectException("PaidType Incorrect");
-
-    }
-
-    public void updateNamePaidTypeById(Long id, String name) {
-        paidTypeDao.updateName(id,name);
-
-    }
-
-    public void updateCustomersPaidTypeById(Long id, Customer customer) {
-        paidTypeDao.updateCustomers(id, customer);
-    }
 
 }
