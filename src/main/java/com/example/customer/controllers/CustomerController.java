@@ -4,16 +4,16 @@ import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
+@AllArgsConstructor
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @PostMapping("/add")
     public ResponseEntity addCustomer(@RequestBody Customer customer){

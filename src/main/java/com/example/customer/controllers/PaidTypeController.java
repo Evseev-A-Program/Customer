@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/paidtype")
+@RequestMapping("/paid-type")
 public class PaidTypeController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class PaidTypeController {
         }
     }
 
-    @GetMapping("/getbycustomer")
+    @GetMapping("/get-by-customer")
     public ResponseEntity getPaidTypesByIdCustomer(@RequestParam Long customerId){
         try{
             return ResponseEntity.ok(paidTypeService.findPaidTypeByIdCustomer(customerId));
