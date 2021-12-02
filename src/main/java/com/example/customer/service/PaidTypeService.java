@@ -4,6 +4,7 @@ import com.example.customer.exception.*;
 import com.example.customer.models.Customer;
 import com.example.customer.models.PaidType;
 import com.example.customer.models.EPaidType;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.PaidTypeDao;
@@ -11,13 +12,11 @@ import com.example.customer.repository.PaidTypeDao;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PaidTypeService {
 
-    @Autowired
-    private PaidTypeDao paidTypeDao;
-
-    @Autowired
-    private CustomerService customerService;
+    private final PaidTypeDao paidTypeDao;
+    private final CustomerService customerService;
 
     public PaidType findPaidTypeById(Long id) throws PaidTypeNotFoundException {
         PaidType paidType = paidTypeDao.findById(id).get();
@@ -57,20 +56,7 @@ public class PaidTypeService {
         customer.addPaidType(paidTypeNew);
         customerService.saveCustomers(customer);
 
-//        boolean correctName = false;
-//        for (EPaidType e : EPaidType.values()){
-//            if (e.name().equals(paidType)) {
-//                correctName = true;
-//                break;
-//            }
-//        }
 
-//        if(correctName) {
-//            Customer customer = customerService.findCustomerById(customerId);
-//            paidType.setCustomer(customer);
-//            paidTypeDao.save(paidType);
-//        }
-//        else throw new PaidTypeIncorrectException("PaidType Incorrect");
     }
 
 
