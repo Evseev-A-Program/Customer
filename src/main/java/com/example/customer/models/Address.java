@@ -1,6 +1,7 @@
 package com.example.customer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,10 @@ public class Address {
 
     private String country;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
+    private Customer customer;
 
     public Address() {
 
