@@ -1,5 +1,6 @@
 package com.example.customer.service;
 
+import com.example.customer.clients.OfferClients;
 import com.example.customer.exception.*;
 import com.example.customer.models.Customer;
 import com.example.customer.models.PaidType;
@@ -41,20 +42,31 @@ public class PaidTypeService {
         if (!paidType.getCustomers().isEmpty()) {
             throw new PaidTypeLinkedToUserException("PaidType is already linked to the user");
         }
+
+        if (!OfferClients.checkPaidType(id)){
+            throw new PaidTypeLinkedToUserException("PaidType is already linked to the offer");
+        }
+
         paidTypeDao.deleteById(id);
     }
 
     public void savePaidType(String paidType, Long customerId) throws CustomerNotFoundException, CustomerAlreadyExistException, PaidTypeAlreadyExistException {
 
         EPaidType name = EPaidType.valueOf(paidType);
-        if (paidTypeDao.findByName(name) != null) throw new PaidTypeAlreadyExistException("PaidType already exists");
-
+        PaidType paidTypeNew = paidTypeDao.findByName(name);
         Customer customer = customerService.findCustomerById(customerId);
 
-        PaidType paidTypeNew = PaidType.builder().name(name).build();
-        paidTypeDao.save(paidTypeNew);
-        customer.addPaidType(paidTypeNew);
-        customerService.saveCustomers(customer);
+        if (paidTypeNew != null) {
+            customer.addPaidType(paidTypeNew);
+            customerService.saveCustomers(customer);
+        } else {
+            paidTypeNew = PaidType.builder().name(name).build();
+            paidTypeDao.save(paidTypeNew);
+            customer.addPaidType(paidTypeNew);
+            customerService.saveCustomers(customer);
+        }
+
+
 
 
     }
