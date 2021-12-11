@@ -15,5 +15,4 @@ public interface CustomerDao extends CrudRepository<Customer, Long> {
 
     Customer findByPhoneNumber(String phoneNumber);
 
-
 }

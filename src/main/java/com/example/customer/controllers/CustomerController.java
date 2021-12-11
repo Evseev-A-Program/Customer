@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/customers")
 @AllArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
+
 
     @PostMapping("/add")
     public ResponseEntity addCustomer(@RequestBody Customer customer){
@@ -70,20 +72,5 @@ public class CustomerController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-//    @PostMapping("/add/paidtype")
-//    public ResponseEntity addPaidTypeCustomer(@RequestParam Long idCustomer, Long idPaidType){
-//        try{
-//            customerService.addPaidTypeCustomer(idCustomer, idPaidType);
-//            return ResponseEntity.ok("PaidType added to the Customers< id " + idCustomer);
-//        } catch (PaidTypeNotFoundException e){
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        } catch (CustomerNotFoundException e){
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        } catch (Exception e){
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-
 
 }

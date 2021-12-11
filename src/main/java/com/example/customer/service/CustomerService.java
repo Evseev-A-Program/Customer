@@ -3,13 +3,19 @@ package com.example.customer.service;
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Customer;
+import com.example.customer.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.CustomerDao;
 
+import java.util.Collections;
+
 
 @Service
-public class CustomerService {
+public class CustomerService implements UserDetailsService {
 
     @Autowired
     private CustomerDao customersDao;
@@ -49,8 +55,19 @@ public class CustomerService {
             throw new CustomerAlreadyExistException("This phone number is already in use");
         }
 
+        customer.setRoles(Collections.singleton(Role.builder().name("ROLE_USER").build()));
         customersDao.save(customer);
     }
 
 
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Customer customer = customersDao.findByEmail(email);
+        if ( customer == null) {
+            throw new UsernameNotFoundException("Customer Not Found");
+        }
+
+        return customer;
+    }
 }

@@ -1,8 +1,11 @@
 package com.example.customer.models;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 
@@ -13,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table
 @Builder
-public class Customer {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +39,9 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
@@ -52,4 +58,33 @@ public class Customer {
     public Customer() {
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

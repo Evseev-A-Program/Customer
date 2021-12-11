@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaidTypeDao extends CrudRepository<PaidType, Long> {
 
+
     PaidType findByName(EPaidType name);
 
 //    @Modifying
