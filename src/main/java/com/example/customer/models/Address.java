@@ -23,7 +23,7 @@ public class Address {
     @Column
     private String city;
 
-    private String state;
+    private String street;
 
     private String country;
 

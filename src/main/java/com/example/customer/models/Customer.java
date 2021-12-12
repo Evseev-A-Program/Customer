@@ -16,21 +16,26 @@ import java.util.Set;
 @Entity
 @Table
 @Builder
-public class Customer implements UserDetails {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String firstname;
+    private String firstName;
 
-    private String lastname;
+    private String lastName;
 
     @Column(unique = true)
     private String email;
 
-    private String password;
+    private String hashPassword;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Enumerated(value = EnumType.STRING)
+    private State state;
 
     @Column(unique = true)
     private String phoneNumber;
@@ -38,9 +43,6 @@ public class Customer implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
 
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name = "customer_id"),
@@ -58,33 +60,4 @@ public class Customer implements UserDetails {
     public Customer() {
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
-    public String getUsername() {
-        return getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

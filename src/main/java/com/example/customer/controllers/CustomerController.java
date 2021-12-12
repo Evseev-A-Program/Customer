@@ -5,16 +5,17 @@ import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.service.CustomerService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/customers")
-@AllArgsConstructor
 public class CustomerController {
 
-    private final CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
 
     @PostMapping("/add")

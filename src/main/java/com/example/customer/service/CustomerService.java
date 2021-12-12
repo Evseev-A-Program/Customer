@@ -15,7 +15,7 @@ import java.util.Collections;
 
 
 @Service
-public class CustomerService implements UserDetailsService {
+public class CustomerService{
 
     @Autowired
     private CustomerDao customersDao;
@@ -46,28 +46,17 @@ public class CustomerService implements UserDetailsService {
             throw new CustomerNotFoundException("Customer Not Found");
         }
 
-        Customer checkCustomer = customersDao.findByEmail(customer.getEmail());
+        Customer checkCustomer = customersDao.findByEmail(customer.getEmail()).get();
         if(checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
             throw new CustomerAlreadyExistException("This email is already in use");
         }
-        checkCustomer = customersDao.findByPhoneNumber(customer.getPhoneNumber());
+        checkCustomer = customersDao.findByPhoneNumber(customer.getPhoneNumber()).get();
         if( checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
             throw new CustomerAlreadyExistException("This phone number is already in use");
         }
 
-        customer.setRoles(Collections.singleton(Role.builder().name("ROLE_USER").build()));
         customersDao.save(customer);
     }
 
 
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Customer customer = customersDao.findByEmail(email);
-        if ( customer == null) {
-            throw new UsernameNotFoundException("Customer Not Found");
-        }
-
-        return customer;
-    }
 }
