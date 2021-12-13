@@ -1,6 +1,5 @@
 package com.example.customer.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +24,7 @@ public class PaidType {
     private EPaidType name;
 
     @ManyToMany(mappedBy = "paidTypes")
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Customer> customers;
 
     public PaidType() {

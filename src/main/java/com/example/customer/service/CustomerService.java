@@ -4,6 +4,7 @@ import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +16,10 @@ import java.util.Collections;
 
 
 @Service
+@AllArgsConstructor
 public class CustomerService{
 
-    @Autowired
-    private CustomerDao customersDao;
+    private final CustomerDao customersDao;
 
     public Customer findCustomerById(Long id) throws CustomerNotFoundException {
         Customer customer = customersDao.findById(id).get();

@@ -3,6 +3,7 @@ package com.example.customer.repository;
 import com.example.customer.models.EPaidType;
 import com.example.customer.models.PaidType;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
