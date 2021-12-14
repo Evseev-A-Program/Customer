@@ -26,5 +26,6 @@
         <input type="submit" value="Login">
     </form>
 </div>
+<a href="/registration">Регистрация</a>
 </body>
 </html>

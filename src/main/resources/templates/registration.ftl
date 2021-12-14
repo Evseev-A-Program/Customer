@@ -44,7 +44,7 @@
         <br>
         <label for="remember-me">
             <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня</label>
-        <input type="submit" value="SignUp">
+        <input type="submit" value="Регистрация">
         <br>
     </form>
 </div>
