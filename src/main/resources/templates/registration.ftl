@@ -41,9 +41,6 @@
         <label for="country">Дом/Квартира
             <input class="input-field"  id="country" name="country">
         </label>
-        <br>
-        <label for="remember-me">
-            <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня</label>
         <input type="submit" value="Регистрация">
         <br>
     </form>
