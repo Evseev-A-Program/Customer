@@ -4,6 +4,7 @@ import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.security.details.UserDetailsImpl;
 import com.example.customer.service.AdminService;
 import com.example.customer.service.CustomerService;
+import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
 import com.example.customer.user.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,20 @@ public class AdminController {
     @Autowired
     private CustomerService customerService;
     @Autowired
+    private PaidTypeService paidTypeService;
+    @Autowired
     private AdminService adminService;
 
     @GetMapping("/customers")
     public String getCustomersPage(ModelMap model) {
         model.addAttribute("customersFromServer", customerService.findAllCustomers());
         return "customers";
+    }
+
+    @GetMapping("/paid-types")
+    public String getPaidTypesPage(ModelMap model) {
+        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+        return "paidtypes";
     }
 
     @PostMapping("/banned")

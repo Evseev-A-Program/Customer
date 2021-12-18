@@ -1,6 +1,7 @@
 package com.example.customer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class Address {
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    //@JsonIgnore
+    @JsonIgnore
     private Customer customer;
 
     public Address() {
