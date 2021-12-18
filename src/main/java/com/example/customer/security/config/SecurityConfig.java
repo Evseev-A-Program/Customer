@@ -32,12 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
-                    .antMatchers("/customers/**").permitAll()
-                .antMatchers("/paid.types.clients").permitAll()
-                .antMatchers("/paidtypes/**").permitAll()
-                    .antMatchers("/admin/**").permitAll()
+                    .antMatchers("/admin/**").hasAuthority("ADMIN")
                     .antMatchers("/registration/**").permitAll()
                     .antMatchers("/").permitAll()
+                    .antMatchers("/css/**").permitAll()
+                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .usernameParameter("email")

@@ -11,7 +11,10 @@
 <div class="form-style-2-heading">${customer.city}</div>
 <div class="form-style-2-heading">${customer.street}</div>
 <div class="form-style-2-heading">${customer.country}</div>
-<a href="/logout">Выход</a>
+<a href="/user/update">Изменить данные</a>
+<br>
+<a href="/logout">Добавить способ оплаты</a>
+<br>
 <a href="/logout">Выход</a>
 </body>
 </html>

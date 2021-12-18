@@ -23,16 +23,12 @@
         </#list>
         </#if>
     </table>
+    <form method="get" action="/admin/paid-types/delete">
+        <input class="input-field" type="text" id="id" name="id">
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="/">Назад</a>
 </div>
 
-<div>
-    <form method="post" action="/paid-type/delete/{{id}}">
-        <label for="id">Введите id способа оплаты, который хотите удалить
-            <br>
-            <input class="input-field" type="text" id="id" name="id">
-        </label>
-        <input type="submit" value="Удалить">
-    </form>
-</div>
 </body>
 </html>

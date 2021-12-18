@@ -26,10 +26,10 @@
 </div>
 
 <div>
-    <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter}">
-        <button type="submit">Найти</button>
-    </form>
+<#--    <form method="get" action="/main">-->
+<#--        <input type="text" name="filter" value="${filter}">-->
+<#--        <button type="submit">Найти</button>-->
+<#--    </form>-->
 </div>
 </body>
 </html>

@@ -1,9 +1,14 @@
+<#ftl encoding='UTF-8'>
 <html>
 <head>
     <title>Title</title>
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-
+<body>
+<#if userNotFound??>
+    <div class="alert alert-danger" role="alert">Пользователь не найден</div>
+</#if>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Clients:
@@ -34,25 +39,24 @@
         </#list>
         </#if>
     </table>
-</div>
-<div>
-    <form method="post" action="/banned">
+    <br>
+    <form method="post" action="/admin/banned">
         <label for="id">Введите id пользователя, которого хотите забанить
             <br>
             <input class="input-field" type="text" id="id" name="id">
         </label>
         <input type="submit" value="Забанить">
     </form>
-</div>
-
-<div>
-    <form method="post" action="/unbanned">
+    <form method="post" action="/admin/unbanned">
         <label for="id">Введите id пользователя, которого хотите разбанить
             <br>
             <input class="input-field" type="text" id="id" name="id">
         </label>
         <input type="submit" value="Разбанить">
     </form>
+    <a href="/">Назад</a>
 </div>
+
+
 </body>
 </html>

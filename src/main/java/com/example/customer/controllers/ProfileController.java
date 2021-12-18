@@ -1,8 +1,8 @@
 package com.example.customer.controllers;
 
 
+import com.example.customer.models.Role;
 import com.example.customer.security.details.UserDetailsImpl;
-import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProfileController {
 
     @Autowired
-    private PaidTypeService paidTypeService;
+    private AdminController adminController;
+    @Autowired
+    private UserController userController;
 
 
     @GetMapping("/")
@@ -24,16 +26,13 @@ public class ProfileController {
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         CustomerDTO customer = CustomerDTO.from(details.getCustomer());
+        if (customer.getRole().equals(Role.ADMIN)){
+            modelMap.addAttribute("customer", customer);
+            return adminController.getAdminPage(authentication);
+        }
         modelMap.addAttribute("customer", customer);
-        return "profile";
+            return userController.getUserPage(authentication);
     }
 
-    @GetMapping("/paid-type-clients")
-    public String addPaidType(ModelMap model, Authentication authentication) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
-        return "paid.types.clients";
-    }
+
 }

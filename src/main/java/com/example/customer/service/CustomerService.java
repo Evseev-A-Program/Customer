@@ -4,6 +4,7 @@ import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
+import com.example.customer.models.State;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +41,18 @@ public class CustomerService{
         }
         customer.deletePaidType();
         customersDao.deleteById(id);
+    }
+
+    public void BanCustomerById(Long id){
+        Customer customer = customersDao.findById(id).get();
+        customer.setState(State.BANNED);
+        customersDao.save(customer);
+    }
+
+    public void UnBanCustomerById(Long id){
+        Customer customer = customersDao.findById(id).get();
+        customer.setState(State.ACTIVE);
+        customersDao.save(customer);
     }
 
     public void saveCustomers(Customer customer) throws CustomerAlreadyExistException, CustomerNotFoundException {

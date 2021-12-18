@@ -1,28 +1,35 @@
 package com.example.customer.controllers;
 
 import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.security.details.UserDetailsImpl;
-import com.example.customer.service.AdminService;
+import com.example.customer.exception.PaidTypeLinkedToUserException;
+import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
-import com.example.customer.transfer.customerDTO.CustomerDTO;
-import com.example.customer.user.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private CustomerService customerService;
     @Autowired
     private PaidTypeService paidTypeService;
-    @Autowired
-    private AdminService adminService;
+
+
+    @GetMapping("/")
+    public String getAdminPage(Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+
+        return "admin";
+    }
+
 
     @GetMapping("/customers")
     public String getCustomersPage(ModelMap model) {
@@ -33,18 +40,33 @@ public class AdminController {
     @GetMapping("/paid-types")
     public String getPaidTypesPage(ModelMap model) {
         model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
-        return "paidtypes";
+        return "paid.types.admins";
     }
 
     @PostMapping("/banned")
-    public String CustomerBannedById(Long id) throws CustomerNotFoundException {
-            adminService.BanCustomerById(id);
-            return "redirect:/customers";
+    public String CustomerBannedById(ModelMap model, Long id) throws CustomerNotFoundException {
+            try {
+                customerService.BanCustomerById(id);
+            } catch (Exception e) {
+                model.addAttribute("userNotFound", true);
+            }
+            return getCustomersPage(model);
     }
 
     @PostMapping("/unbanned")
-    public String CustomerUnBannedById(Long id) throws CustomerNotFoundException {
-        adminService.UnBanCustomerById(id);
-        return "redirect:/customers";
+    public String CustomerUnBannedById(ModelMap model, Long id) throws CustomerNotFoundException {
+        try {
+            customerService.UnBanCustomerById(id);
+        } catch (Exception e) {
+            model.addAttribute("userNotFound", true);
+        }
+
+        return getCustomersPage(model);
+    }
+
+    @GetMapping("/paid-types/delete")
+    public String deletePaidType(ModelMap model, Long id) throws PaidTypeLinkedToUserException, PaidTypeNotFoundException {
+            paidTypeService.deletePaidTypeById(id);
+            return getPaidTypesPage(model);
     }
 }

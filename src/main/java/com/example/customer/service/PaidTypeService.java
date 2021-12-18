@@ -43,9 +43,9 @@ public class PaidTypeService {
             throw new PaidTypeLinkedToUserException("PaidType is already linked to the user");
         }
 
-        if (!OfferClients.checkPaidType(id)){
-            throw new PaidTypeLinkedToUserException("PaidType is already linked to the offer");
-        }
+//        if (!OfferClients.checkPaidType(id)){
+//            throw new PaidTypeLinkedToUserException("PaidType is already linked to the offer");
+//        }
 
         paidTypeDao.deleteById(id);
     }
