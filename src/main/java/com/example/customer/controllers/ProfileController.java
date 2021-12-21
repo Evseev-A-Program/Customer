@@ -20,18 +20,16 @@ public class ProfileController {
 
 
     @GetMapping("/")
-    public String getProfilePage(ModelMap modelMap, Authentication authentication) {
+    public String getProfilePage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         CustomerDTO customer = CustomerDTO.from(details.getCustomer());
         if (customer.getRole().equals(Role.ADMIN)){
-            modelMap.addAttribute("customer", customer);
-            return adminController.getAdminPage(authentication);
+            return "redirect:/admin/";
         }
-        modelMap.addAttribute("customer", customer);
-            return userController.getUserPage(authentication);
+            return "redirect:/user/";
     }
 
 

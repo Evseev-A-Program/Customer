@@ -12,6 +12,7 @@
         <tr>
             <th>id</th>
             <th>Name</th>
+            <th>State</th>
 
         </tr>
         <#if paidTypesFromServer??>
@@ -19,13 +20,21 @@
         <tr>
             <td>${paidType.id}</td>
             <td>${paidType.name}</td>
+            <td>${paidType.state}</td>
         </tr>
         </#list>
         </#if>
     </table>
-    <form method="get" action="/admin/paid-types/delete">
+    <br>
+    <div class="form-style-2-heading">Введите id</div>
+    <form method="post" action="/admin/paid-types/delete">
         <input class="input-field" type="text" id="id" name="id">
-        <button type="submit">Удалить</button>
+        <button type="submit">Заблокировать</button>
+    </form>
+
+    <form method="post" action="/admin/paid-types/active">
+        <input class="input-field" type="text" id="id" name="id">
+        <button type="submit">Разблокировать</button>
     </form>
     <a href="/">Назад</a>
 </div>

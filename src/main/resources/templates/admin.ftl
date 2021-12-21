@@ -9,12 +9,7 @@
 <body>
 <h1 class="form-style-1-heading">АДМИН</h1>
 <br>
-<div class="form-style-2-heading">${customer.firstName}</div>
-<div class="form-style-2-heading">${customer.lastName}</div>
-<div>Адрес</div>
-<div class="form-style-2-heading">${customer.city}</div>
-<div class="form-style-2-heading">${customer.street}</div>
-<div class="form-style-2-heading">${customer.country}</div>
+<div class="form-style-2-heading">${customer.firstName} ${customer.lastName}</div>
 <a href="/admin/customers">Показать всех клиентов</a>
 <br>
 <a href="/admin/paid-types">Показать все способы оплаты</a>

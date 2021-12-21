@@ -20,8 +20,6 @@ public class PaidTypeController {
         try{
             paidTypeService.savePaidType(paidType, customerId);
             return ResponseEntity.ok("PaidType save");
-        } catch (PaidTypeAlreadyExistException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

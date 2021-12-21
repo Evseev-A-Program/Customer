@@ -32,6 +32,7 @@ public class CustomerDTO {
         return CustomerDTO.builder()
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
+                .phoneNumber(customer.getPhoneNumber())
                 .city(customer.getAddress().getCity())
                 .street(customer.getAddress().getStreet())
                 .country(customer.getAddress().getCountry())

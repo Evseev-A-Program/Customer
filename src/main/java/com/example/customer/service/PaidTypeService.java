@@ -1,16 +1,16 @@
 package com.example.customer.service;
 
-import com.example.customer.clients.OfferClients;
-import com.example.customer.exception.*;
+import com.example.customer.exception.CustomerNotFoundException;
+import com.example.customer.exception.PaidTypeLinkedToUserException;
+import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.models.Customer;
-import com.example.customer.models.PaidType;
 import com.example.customer.models.EPaidType;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.customer.models.PaidType;
+import com.example.customer.models.State;
+import com.example.customer.repository.CustomerDao;
 import com.example.customer.repository.PaidTypeDao;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +18,7 @@ public class PaidTypeService {
 
     private final PaidTypeDao paidTypeDao;
     private final CustomerService customerService;
+    private final CustomerDao customerDao;
 
     public PaidType findPaidTypeById(Long id) throws PaidTypeNotFoundException {
         PaidType paidType = paidTypeDao.findById(id).get();
@@ -47,25 +48,26 @@ public class PaidTypeService {
 //            throw new PaidTypeLinkedToUserException("PaidType is already linked to the offer");
 //        }
 
-        paidTypeDao.deleteById(id);
+        paidType.setState(State.BANNED);
+        paidTypeDao.save(paidType);
     }
 
-    public void savePaidType(String paidType, Long customerId) throws CustomerNotFoundException, CustomerAlreadyExistException, PaidTypeAlreadyExistException {
+    public void activePaidTypeById(Long id) throws PaidTypeNotFoundException, PaidTypeLinkedToUserException {
+        PaidType paidType = findPaidTypeById(id);
+        paidType.setState(State.ACTIVE);
+        paidTypeDao.save(paidType);
+    }
+
+    public void savePaidType(String paidType, Long customerId) throws PaidTypeNotFoundException {
 
         EPaidType name = EPaidType.valueOf(paidType);
         PaidType paidTypeNew = paidTypeDao.findByName(name);
-        Customer customer = customerService.findCustomerById(customerId);
+        Customer customer = customerDao.findById(customerId).get();
 
         if (paidTypeNew != null) {
             customer.addPaidType(paidTypeNew);
-            customerService.saveCustomers(customer);
-        } else {
-            paidTypeNew = PaidType.builder().name(name).build();
-            paidTypeDao.save(paidTypeNew);
-            customer.addPaidType(paidTypeNew);
-            customerService.saveCustomers(customer);
-        }
-
+            customerDao.save(customer);
+        } else throw new PaidTypeNotFoundException ("Такого способа оплаты нейдено");
 
 
 

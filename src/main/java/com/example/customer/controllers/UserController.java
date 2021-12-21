@@ -1,5 +1,9 @@
 package com.example.customer.controllers;
 
+import com.example.customer.exception.CustomerAlreadyExistException;
+import com.example.customer.exception.CustomerNotFoundException;
+import com.example.customer.exception.PaidTypeNotFoundException;
+import com.example.customer.models.Address;
 import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
 import com.example.customer.security.details.UserDetailsImpl;
@@ -14,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import utils.CustomerFromAuthentication;
 
 @Controller
 @RequestMapping("/user")
@@ -26,10 +31,13 @@ public class UserController {
     private PaidTypeService paidTypeService;
 
     @GetMapping("/")
-    public String getUserPage(Authentication authentication) {
+    public String getUserPage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
         }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
+        model.addAttribute("customer", CustomerDTO.from(details.getCustomer()));
 
         return "user";
     }
@@ -44,27 +52,49 @@ public class UserController {
         return "paid.types.clients";
     }
 
+    @GetMapping("/paid-types/add")
+    public String addPaidType(ModelMap model, Authentication authentication, String name) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        try {
+            paidTypeService.savePaidType(name, details.getCustomer().getId());
+            model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+        } catch (PaidTypeNotFoundException e) {
+            model.addAttribute("error", true);
+        }
+        return "redirect:/paid-types";
+    }
+
+
+
+
+
     @GetMapping("/update")
     public String updateCustomerPage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
         }
-        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        CustomerDTO customer = CustomerDTO.from(details.getCustomer());
-        model.addAttribute("customer", customer);
+        model.addAttribute("customer", CustomerFromAuthentication.getCustomer(authentication));
         return "customer.update";
     }
 
-//    @PostMapping("/update")
-//    public String updateCustomer(ModelMap model, Authentication authentication, UserForm userForm) {
-//        if (authentication == null) {
-//            return "redirect:/login";
-//        }
-//        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-//        CustomerDTO customer = CustomerDTO.from(details.getCustomer());
-//        try {
-//            customerService.saveCustomers();
-//        }
-//        return "customer.update";
-//    }
+    @PostMapping("/update")
+    public String updateCustomer(Authentication authentication, UserForm userForm) throws CustomerAlreadyExistException, CustomerNotFoundException {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        Customer customer = details.getCustomer();
+        customer.setPhoneNumber(userForm.getPhoneNumber());
+        customer.setFirstName(userForm.getFirstName());
+        customer.setLastName(userForm.getLastName());
+        Address address = customer.getAddress();
+        address.setCity(userForm.getCity());
+        address.setStreet(userForm.getStreet());
+        address.setCountry(userForm.getCountry());
+        customerService.saveCustomers(customer);
+        return "redirect:/";
+    }
 }
