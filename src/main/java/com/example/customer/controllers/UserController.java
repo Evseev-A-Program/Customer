@@ -2,10 +2,8 @@ package com.example.customer.controllers;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.models.Address;
 import com.example.customer.models.Customer;
-import com.example.customer.models.Role;
 import com.example.customer.security.details.UserDetailsImpl;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
@@ -44,12 +42,12 @@ public class UserController {
 
 
     @GetMapping("/paid-types")
-    public String PaidTypePage(ModelMap model, Authentication authentication) {
+    public String paidTypePage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
         }
         model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
-        return "paid.types.clients";
+        return "paid.types";
     }
 
     @GetMapping("/paid-types/add")
@@ -58,13 +56,10 @@ public class UserController {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        try {
-            paidTypeService.savePaidType(name, details.getCustomer().getId());
-            model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
-        } catch (PaidTypeNotFoundException e) {
-            model.addAttribute("error", true);
-        }
-        return "redirect:/paid-types";
+        paidTypeService.savePaidType(name, details.getCustomer().getId());
+        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+
+        return "redirect:/user/paid-types";
     }
 
 

@@ -44,7 +44,7 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
     private Set<PaidType> paidTypes;

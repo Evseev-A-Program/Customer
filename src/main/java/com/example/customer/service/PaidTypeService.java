@@ -58,18 +58,14 @@ public class PaidTypeService {
         paidTypeDao.save(paidType);
     }
 
-    public void savePaidType(String paidType, Long customerId) throws PaidTypeNotFoundException {
+    public void savePaidType(String paidTypeStr, Long customerId) {
 
-        EPaidType name = EPaidType.valueOf(paidType);
-        PaidType paidTypeNew = paidTypeDao.findByName(name);
+        EPaidType name = EPaidType.valueOf(paidTypeStr);
+        PaidType paidType = paidTypeDao.findByName(name);
         Customer customer = customerDao.findById(customerId).get();
 
-        if (paidTypeNew != null) {
-            customer.addPaidType(paidTypeNew);
-            customerDao.save(customer);
-        } else throw new PaidTypeNotFoundException ("Такого способа оплаты нейдено");
-
-
+        customer.addPaidType(paidType);
+        customerDao.save(customer);
 
     }
 

@@ -14,6 +14,16 @@
 <br>
 <a href="/admin/paid-types">Показать все способы оплаты</a>
 <br>
+<br>
+<div class = "form-style-2-heading">Товары</div>
+<a href="/admin/category">Добавить категорию</a>
+<br>
+<a href="/admin/characteristic">Добавить характеристику</a>
+<br>
+<a href="/admin/offer">Добавить товар</a>
+<br>
+<br>
+<br>
 <a href="/logout">Выход</a>
 </body>
 </body>

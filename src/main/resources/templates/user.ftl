@@ -11,24 +11,26 @@
 <div class="form-style-2-heading">Улица: ${customer.street}</div>
 <div class="form-style-2-heading">Дом/квартира: ${customer.country}</div>
 
-<div class="form-style-2">
-  <div class="form-style-2-heading">
+<#if paidTypesClients??>
+<div class="form-style-2-heading">
     Ваши способы оплаты:
-  </div>
   <table>
     <tr>
-      <th>Name</th>
+      <th></th>
     </tr>
-    <#if paidTypesClients??>
+
       <#list paidTypesClients as paidType>
         <tr>
           <td>${paidType.name}</td>
         </tr>
       </#list>
-    </#if>
+
   </table>
 </div>
+</#if>
 
+<a href="/store/">Список товаров</a>
+<br>
 <a href="/user/update">Изменить данные</a>
 <br>
 <a href="/user/paid-types">Способы оплаты</a>
