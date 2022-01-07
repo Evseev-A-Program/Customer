@@ -16,6 +16,7 @@
             <th>Цена</th>
             <th>Категория</th>
             <th>Характеристика (Описание)</th>
+            <th>Способы оплаты</th>
             <th> </th>
 
         </tr>
@@ -28,8 +29,7 @@
                     <td>
                         <table>
                             <tr>
-<#--                            <th> </th>-->
-<#--                            <th> </th>-->
+
                             </tr>
                             <#if offer.characteristics??>
                                 <#list offer.characteristics as characteristic>
@@ -41,6 +41,18 @@
                             </#if>
                         </table>
                     </td>
+
+                    <td>
+                        <#list offer.paidTypesId as paidType>
+                                <#if paidType == 1> Credit </#if>
+                                <#if paidType == 2> Cash </#if>
+                                <#if paidType == 3> Terminals </#if>
+                                <#if paidType == 4> PhoneBalance </#if>
+                                <#if paidType == 5> Transfer </#if>
+                                <#if paidType == 6> BankCard </#if>
+                        </#list>
+                    </td>
+
                     <td>
                         <form method="post" action="/store">
                             <input class="input-field" type="hidden" id="name" name="name" value=${offer.id}>

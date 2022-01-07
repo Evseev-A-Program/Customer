@@ -25,7 +25,6 @@ public class AdminController {
     @Autowired
     private PaidTypeService paidTypeService;
 
-
     @GetMapping("/")
     public String getAdminPage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
@@ -34,7 +33,6 @@ public class AdminController {
         model.addAttribute("customer", CustomerFromAuthentication.getCustomer(authentication));
         return "admin";
     }
-
 
     @GetMapping("/customers")
     public String getCustomersPage(ModelMap model) {
@@ -154,13 +152,40 @@ public class AdminController {
         return "redirect:/admin/offer";
     }
 
-    @PostMapping("/offer-update/paid-type")
+    @PostMapping("/offer-update/paid-type/add")
     public String addPaidTypeFromOffer(ModelMap model, Authentication authentication, Long paidTypeId, Long offerId) {
         if (authentication == null) {
             return "redirect:/login";
         }
         OfferClients.addPaidType(offerId, paidTypeId);
-        model.addAttribute("offerFromServer", OfferClients.getOffer(offerId));
         return "redirect:/admin/offer-update?id=" + offerId;
     }
+
+    @PostMapping("/offer-update/paid-type/del")
+    public String delPaidTypeFromOffer(ModelMap model, Authentication authentication, Long paidTypeId, Long offerId) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        OfferClients.delPaidType(offerId, paidTypeId);
+        return "redirect:/admin/offer-update?id=" + offerId;
+    }
+
+    @PostMapping("/offer-update/category")
+    public String addCategoryFromOffer(ModelMap model, Authentication authentication, Long categoryId, Long offerId) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        OfferClients.addCategoryFromOffer(offerId, categoryId);
+        return "redirect:/admin/offer-update?id=" + offerId;
+    }
+
+    @PostMapping("/offer-update/characteristic")
+    public String addCharacteristicFromOffer(ModelMap model, Authentication authentication, Long characteristicId, Long offerId) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        OfferClients.addCharacteristicFromOffer(offerId, characteristicId);
+        return "redirect:/admin/offer-update?id=" + offerId;
+    }
+
 }

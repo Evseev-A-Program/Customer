@@ -23,9 +23,20 @@ public class OfferClients {
     }
 
 
-    public static List<Object> getOffers()
+    public static List<Object> getOffersNotNull()
     {
         final String url = "http://localhost:8081/offer/get/all-not-null";
+        RestTemplate restTemplate = new RestTemplate();
+
+        ParameterizedTypeReference<List<Object>> pr = new ParameterizedTypeReference<List<Object>>() {};
+        ResponseEntity<List<Object>> exchange = restTemplate.exchange(url, HttpMethod.GET, null, pr);
+
+        return exchange.getBody();
+    }
+
+    public static List<Object> getOffers()
+    {
+        final String url = "http://localhost:8081/offer/get/all";
         RestTemplate restTemplate = new RestTemplate();
 
         ParameterizedTypeReference<List<Object>> pr = new ParameterizedTypeReference<List<Object>>() {};
@@ -97,6 +108,15 @@ public class OfferClients {
         restTemplate.getForEntity(url, String.class, offer, paidType);
     }
 
+    public static void delPaidType(Long offerId, Long paidTypeId)
+    {
+        final String url = "http://localhost:8081/offer/del-paid-type?id={1}&paidTypeId={2}";
+        RestTemplate restTemplate = new RestTemplate();
+        Object offer = offerId;
+        Object paidType = paidTypeId;
+        restTemplate.getForEntity(url, String.class, offer, paidType);
+    }
+
     public static void addOffer(OfferDTO offerDTO)
     {
         final String url = "http://localhost:8081/offer/add";
@@ -113,4 +133,23 @@ public class OfferClients {
         restTemplate.put(url, offerDTO);
 
     }
+
+    public static void addCategoryFromOffer(Long offerId, Long categoryId)
+    {
+        final String url = "http://localhost:8081/offer/add-category?id={1}&categoryId={2}";
+        RestTemplate restTemplate = new RestTemplate();
+        Object offer = offerId;
+        Object category = categoryId;
+        restTemplate.getForEntity(url, String.class, offer, category);
+    }
+
+    public static void addCharacteristicFromOffer(Long offerId, Long characteristicId)
+    {
+        final String url = "http://localhost:8081/offer/add-characteristic?id={1}&characteristicId={2}";
+        RestTemplate restTemplate = new RestTemplate();
+        Object offer = offerId;
+        Object characteristic = characteristicId;
+        restTemplate.getForEntity(url, String.class, offer, characteristic);
+    }
+
 }

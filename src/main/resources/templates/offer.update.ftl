@@ -24,22 +24,52 @@
 
 <div class="form-style-2">
     <div class="form-style-2-heading">
-        Выберите способ оплаты из предложенного списка:
+        Уже имеющиеся способы оплаты:
     </div>
     <table>
         <tr>
+            <th>Id: </th>
+        </tr>
+        <#if offerFromServer.paidTypesId??>
+            <#list offerFromServer.paidTypesId as paidType>
+                <tr>
+                    <td>${paidType}</td>
+                </tr>
+            </#list>
+        </#if>
+    </table>
+</div>
+
+
+<div class="form-style-2">
+    <div class="form-style-2-heading">
+        Выберите способ оплаты из предложенного списка (добавить/удалить):
+    </div>
+    <table>
+        <tr>
+            <th>Id</th>
             <th>Name</th>
+            <th> </th>
             <th> </th>
         </tr>
         <#if paidTypesFromServer??>
             <#list paidTypesFromServer as paidType>
                 <tr>
+                    <td>${paidType.id}</td>
                     <td>${paidType.name}</td>
                     <td>
-                        <form method="post" action="/admin/offer-update/paid-type">
+                        <form method="post" action="/admin/offer-update/paid-type/add">
                             <input class="input-field" type="hidden" id="paidTypeId" name="paidTypeId" value=${paidType.id}>
                             <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offerFromServer.id}>
                             <button type="submit">Добавить</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form method="post" action="/admin/offer-update/paid-type/del">
+                            <input class="input-field" type="hidden" id="paidTypeId" name="paidTypeId" value=${paidType.id}>
+                            <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offerFromServer.id}>
+                            <button type="submit">Удалить</button>
                         </form>
                     </td>
                 </tr>
@@ -47,6 +77,26 @@
         </#if>
     </table>
 </div>
+
+    <form method="post" action="/admin/offer-update/category">
+        <label for="categoryId">Id категории:
+            <input class="input-field"  id="categoryId" name="categoryId">
+            <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offerFromServer.id}>
+        </label>
+        <br>
+        <input type="submit" value="Добавить">
+        <br>
+    </form>
+
+<form method="post" action="/admin/offer-update/characteristic">
+    <label for="characteristicId">Id характеристики:
+        <input class="input-field"  id="characteristicId" name="characteristicId">
+        <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offerFromServer.id}>
+    </label>
+    <br>
+    <input type="submit" value="Добавить">
+    <br>
+</form>
 
 <a href="/admin/offer">Назад</a>
 </body>

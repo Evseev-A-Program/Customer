@@ -19,7 +19,7 @@ public class StoreController {
         if (authentication == null) {
             return "redirect:/login";
         }
-        model.addAttribute("offersFromServer", OfferClients.getOffers());
+        model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
         return "store";
     }
 

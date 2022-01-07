@@ -20,7 +20,7 @@ public class OfferDTO {
 
    // private Set<Characteristic> characteristics;
 
-    private String categoryName;
+    private String category;
 
 }
 

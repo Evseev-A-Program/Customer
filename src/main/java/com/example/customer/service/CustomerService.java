@@ -23,10 +23,9 @@ public class CustomerService{
     private final CustomerDao customersDao;
 
     public Customer findCustomerById(Long id) throws CustomerNotFoundException {
-        Customer customer = customersDao.findById(id).get();
-        if ( customer == null) {
-            throw new CustomerNotFoundException("Customer Not Found");
-        }
+        Customer customer = customersDao.findById(id)
+                .orElseThrow(()
+                        -> new CustomerNotFoundException("Customer Not Found"));
         return customer;
     }
 

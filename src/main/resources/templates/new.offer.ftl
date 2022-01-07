@@ -5,12 +5,15 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
+
 <form method="post" action="/admin/offer">
     <label for="name">Наименование товара
+        <br>
         <input class="input-field" type="text" id="name" name="name" >
     </label>
     <br>
     <label for="price">Стоимость
+        <br>
         <input class="input-field" type="text" id="price" name="price" >
     </label>
     <br>
@@ -24,6 +27,9 @@
             <th>id</th>
             <th>Name</th>
             <th>Price</th>
+<#--            <th>PaidType</th>-->
+<#--            <th>Category</th>-->
+<#--            <th>Characteristic</th>-->
             <th> </th>
         </tr>
 
