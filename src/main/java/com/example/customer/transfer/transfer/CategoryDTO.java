@@ -1,4 +1,5 @@
-package com.example.customer.transfer.OfferDTO;
+package com.example.customer.transfer.transfer;
+
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,10 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class CharacteristicDTO {
+public class CategoryDTO {
 
     private String name;
-
-    private String description;
-
 }

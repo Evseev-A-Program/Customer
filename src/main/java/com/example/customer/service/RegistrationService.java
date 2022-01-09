@@ -8,7 +8,7 @@ import com.example.customer.models.Role;
 import com.example.customer.models.State;
 import com.example.customer.repository.CustomerDao;
 import com.example.customer.repository.RegistrationDao;
-import com.example.customer.user.UserForm;
+import com.example.customer.forms.UserForm;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -48,6 +49,9 @@ public class Customer {
     @JoinTable(joinColumns = @JoinColumn(name = "customer_id"),
             inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
     private Set<PaidType> paidTypes;
+
+//    @OneToMany(mappedBy = "customer")
+//    Set<Token> tokens;
 
     public void addPaidType(PaidType paidType) {
         paidTypes.add(paidType);

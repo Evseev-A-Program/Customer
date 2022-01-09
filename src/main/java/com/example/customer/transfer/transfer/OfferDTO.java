@@ -1,4 +1,4 @@
-package com.example.customer.transfer.OfferDTO;
+package com.example.customer.transfer.transfer;
 
 import lombok.Builder;
 import lombok.Getter;

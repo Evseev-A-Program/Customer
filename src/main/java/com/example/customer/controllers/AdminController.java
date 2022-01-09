@@ -6,7 +6,7 @@ import com.example.customer.exception.PaidTypeLinkedToUserException;
 import com.example.customer.exception.PaidTypeNotFoundException;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
-import com.example.customer.transfer.OfferDTO.OfferDTO;
+import com.example.customer.transfer.transfer.OfferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

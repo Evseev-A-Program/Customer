@@ -2,7 +2,7 @@ package com.example.customer.repository;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
-import com.example.customer.user.UserForm;
+import com.example.customer.forms.UserForm;
 
 public interface RegistrationDao {
 

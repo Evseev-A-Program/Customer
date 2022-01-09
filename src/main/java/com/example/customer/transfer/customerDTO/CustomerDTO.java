@@ -2,7 +2,6 @@ package com.example.customer.transfer.customerDTO;
 
 import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
-import com.example.customer.user.UserForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

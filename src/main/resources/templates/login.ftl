@@ -22,7 +22,8 @@
         </label>
         <br>
         <label for="remember-me">
-            <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня</label>
+            <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня
+        </label>
         <input type="submit" value="Логин">
     </form>
     <a href="/registration">Регистрация</a>

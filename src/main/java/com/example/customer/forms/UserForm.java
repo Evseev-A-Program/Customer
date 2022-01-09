@@ -1,10 +1,7 @@
-package com.example.customer.user;
+package com.example.customer.forms;
 
-import com.example.customer.models.Address;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter

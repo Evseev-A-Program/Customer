@@ -8,7 +8,7 @@ import com.example.customer.security.details.UserDetailsImpl;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
-import com.example.customer.user.UserForm;
+import com.example.customer.forms.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

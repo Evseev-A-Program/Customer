@@ -1,16 +1,14 @@
 package com.example.customer.clients;
 
-import com.example.customer.transfer.OfferDTO.CategoryDTO;
-import com.example.customer.transfer.OfferDTO.CharacteristicDTO;
-import com.example.customer.transfer.OfferDTO.OfferDTO;
+import com.example.customer.transfer.transfer.CategoryDTO;
+import com.example.customer.transfer.transfer.CharacteristicDTO;
+import com.example.customer.transfer.transfer.OfferDTO;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class OfferClients {
 
