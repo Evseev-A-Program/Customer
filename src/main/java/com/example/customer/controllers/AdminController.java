@@ -140,6 +140,8 @@ public class AdminController {
         }
         model.addAttribute("offerFromServer", OfferClients.getOffer(id));
         model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+        model.addAttribute("categoriesFromServer", OfferClients.getCategory());
+        model.addAttribute("characteristicsFromServer", OfferClients.getCharacteristic());
         return "offer.update";
     }
 

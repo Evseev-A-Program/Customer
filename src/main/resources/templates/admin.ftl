@@ -5,8 +5,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <title>Admin Page</title>
 </head>
-<body>
-<body>
+<body align="center">
 <h1 class="form-style-1-heading">АДМИН</h1>
 <br>
 <div class="form-style-2-heading">${customer.firstName} ${customer.lastName}</div>
@@ -25,6 +24,5 @@
 <br>
 <br>
 <a href="/logout">Выход</a>
-</body>
 </body>
 </html>

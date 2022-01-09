@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
 
 <form method="post" action="/admin/offer-update">
     <div class="form-style-2-heading">Id: ${offerFromServer.id}</div>
@@ -21,7 +21,7 @@
     <input type="submit" value="Update">
     <br>
 </form>
-
+########################################################################################################
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Уже имеющиеся способы оплаты:
@@ -77,7 +77,7 @@
         </#if>
     </table>
 </div>
-
+########################################################################################################
     <form method="post" action="/admin/offer-update/category">
         <label for="categoryId">Id категории:
             <input class="input-field"  id="categoryId" name="categoryId">
@@ -88,6 +88,16 @@
         <br>
     </form>
 
+<#if categoriesFromServer??>
+    <#list categoriesFromServer as category>
+        <tr>
+            <td>${category.id}</td>
+            <td>${category.name}</td>
+        </tr>
+    </#list>
+</#if>
+<br>
+########################################################################################################
 <form method="post" action="/admin/offer-update/characteristic">
     <label for="characteristicId">Id характеристики:
         <input class="input-field"  id="characteristicId" name="characteristicId">
@@ -98,6 +108,17 @@
     <br>
 </form>
 
+<#if characteristicsFromServer??>
+    <#list characteristicsFromServer as characteristic>
+        <tr>
+            <td>${characteristic.id}</td>
+            <td>${characteristic.name}</td>
+            <td>${characteristic.description}</td>
+        </tr>
+    </#list>
+
+</#if>
+<br>
 <a href="/admin/offer">Назад</a>
 </body>
 </html>

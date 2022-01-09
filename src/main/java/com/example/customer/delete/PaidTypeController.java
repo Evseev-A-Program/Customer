@@ -1,4 +1,4 @@
-package com.example.customer.controllers;
+package com.example.customer.delete;
 
 import com.example.customer.exception.*;
 import com.example.customer.models.Customer;

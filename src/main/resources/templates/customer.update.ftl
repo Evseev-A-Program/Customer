@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
 <form method="post" action="/user/update">
     <label for="phone-number">Номер телефона
         <input class="input-field" type="text" id="phone-number" name="phoneNumber" value=${customer.phoneNumber}>

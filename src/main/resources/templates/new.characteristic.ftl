@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
 <form method="post" action="/admin/characteristic">
     <label for="name">Бренд
         <input class="input-field" type="text" id="name" name="name" >

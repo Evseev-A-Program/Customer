@@ -4,9 +4,9 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-<div class="form-style-2">
-    <div class="form-style-2-heading">
+<body >
+<div class="form-style-2" align="center">
+    <div class="form-style-2-heading" >
         Выберите способ оплаты из предложенного списка:
     </div>
     <table>
@@ -29,7 +29,8 @@
             </#list>
         </#if>
     </table>
+    <a href="/">Назад</a>
 </div>
-<a href="/">Назад</a>
+
 </body>
 </html>

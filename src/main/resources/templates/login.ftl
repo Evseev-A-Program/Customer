@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
 <#if error??>
     <div class="alert alert-danger" role="alert">Почта или пароль введены неверно</div>
 </#if>
@@ -13,6 +13,7 @@
         Please Login!
     </div>
     <form method="post" action="/login">
+<#--        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">-->
         <label for="email">Почта
             <input class="input-field" type="text" id="email" name="email">
         </label>

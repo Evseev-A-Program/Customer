@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
 <form method="post" action="/admin/category">
     <label for="name">Наименование категории
         <input class="input-field" type="text" id="name" name="name" >
@@ -28,7 +28,6 @@
             <td>${category.name}</td>
         </tr>
     </#list>
-
 </#if>
 </table>
 

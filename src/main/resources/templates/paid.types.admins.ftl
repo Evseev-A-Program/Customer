@@ -3,7 +3,7 @@
     <title>Title</title>
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
-
+<body align="center">
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Paid Types:

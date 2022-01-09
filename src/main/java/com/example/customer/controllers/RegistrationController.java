@@ -6,8 +6,11 @@ import com.example.customer.service.RegistrationService;
 import com.example.customer.forms.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class  RegistrationController {
@@ -21,8 +24,14 @@ public class  RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String Registration(UserForm userForm) throws CustomerAlreadyExistException, CustomerNotFoundException {
-        registrationService.reg(userForm);
+    public String Registration(UserForm userForm, ModelMap model) throws CustomerAlreadyExistException, CustomerNotFoundException {
+        try {
+            registrationService.reg(userForm);
+        } catch (CustomerAlreadyExistException e) {
+            model.addAttribute("error", true);
+            return "registration";
+        }
+
         return "redirect:/login";
     }
 }

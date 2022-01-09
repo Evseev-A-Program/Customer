@@ -24,20 +24,22 @@ public class RegistrationService implements RegistrationDao {
 
     public void reg(UserForm userForm) throws CustomerAlreadyExistException, CustomerNotFoundException {
         String hashPassword = passwordEncoder.encode(userForm.getPassword());
-        Customer customer = Customer.builder()
-                .hashPassword(hashPassword)
-                .email(userForm.getEmail())
-                .phoneNumber(userForm.getPhoneNumber())
-                .firstName(userForm.getFirstName())
-                .lastName(userForm.getLastName())
-                .role(Role.USER)
-                .state(State.ACTIVE)
-                .address(Address.builder()
-                        .city(userForm.getCity())
-                        .street(userForm.getStreet())
-                        .country(userForm.getCountry()).build())
-                .build();
+        if (!customerDao.findByEmail(userForm.getEmail()).isPresent() && !customerDao.findByPhoneNumber(userForm.getPhoneNumber()).isPresent()) {
+            Customer customer = Customer.builder()
+                    .hashPassword(hashPassword)
+                    .email(userForm.getEmail())
+                    .phoneNumber(userForm.getPhoneNumber())
+                    .firstName(userForm.getFirstName())
+                    .lastName(userForm.getLastName())
+                    .role(Role.USER)
+                    .state(State.ACTIVE)
+                    .address(Address.builder()
+                            .city(userForm.getCity())
+                            .street(userForm.getStreet())
+                            .country(userForm.getCountry()).build())
+                    .build();
 
-        customerDao.save(customer);
+            customerDao.save(customer);
+        } else throw new CustomerAlreadyExistException("Customer already exists");
     }
 }

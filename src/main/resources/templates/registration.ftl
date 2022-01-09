@@ -4,7 +4,10 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body align="center">
+<#if error??>
+    <div class="alert alert-danger" role="alert">Такой пользователь уже существует</div>
+</#if>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Регистрация
