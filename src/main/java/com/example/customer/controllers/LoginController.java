@@ -1,18 +1,17 @@
 package com.example.customer.controllers;
 
 import com.example.customer.forms.LoginForm;
-import com.example.customer.security.details.UserDetailsImpl;
+import com.example.customer.models.Customer;
 import com.example.customer.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -33,15 +32,24 @@ public class LoginController {
         return "login";
     }
 
-//   @PostMapping ("/login")
-//    public String login(@RequestBody LoginForm loginForm) {
+//    @GetMapping("/login-in")
+//    public String getLoginToken(Authentication authentication, ModelMap modelMap, HttpServletRequest request) {
 //
-//            loginService.login(loginForm);
+//        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
 //
-//        return "redirect:/";
+//        modelMap.addAttribute("token", token);
+//
+//        return "token";
 //    }
 
-
+//   @PostMapping ("/auth")
+//    public String login(Authentication authentication, ModelMap modelMap, LoginForm loginForm) {
+//       if (authentication == null) {
+//           return "redirect:/login";
+//       }
+//            return "redirect:/";
+//
+//    }
 
 
 

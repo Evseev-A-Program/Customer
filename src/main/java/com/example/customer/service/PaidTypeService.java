@@ -87,6 +87,17 @@ public class PaidTypeService {
 
     }
 
+    public void deletePaidType(String paidTypeStr, Long customerId) {
+
+        EPaidType name = EPaidType.valueOf(paidTypeStr);
+        PaidType paidType = paidTypeDao.findByName(name);
+        Customer customer = customerDao.findById(customerId).get();
+
+        customer.deletePaidType(paidType);
+        customerDao.save(customer);
+
+    }
+
 
 
 

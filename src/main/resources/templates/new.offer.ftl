@@ -4,8 +4,8 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body align="center">
-
+<body>
+<div align="center">
 <form method="post" action="/admin/offer">
     <label for="name">Наименование товара
         <br>
@@ -27,9 +27,9 @@
             <th>id</th>
             <th>Name</th>
             <th>Price</th>
-<#--            <th>PaidType</th>-->
-<#--            <th>Category</th>-->
-<#--            <th>Characteristic</th>-->
+            <th>Category</th>
+            <th>PaidType</th>
+            <th>Characteristic</th>
             <th> </th>
         </tr>
 
@@ -39,6 +39,33 @@
                     <td>${offer.id}</td>
                     <td>${offer.name}</td>
                     <td>${offer.price}</td>
+                    <td>
+                        <#if offer.category?has_content>
+                            ${offer.category.name}
+                        </#if>
+                     </td>
+                    <td>
+                        <#if offer.paidTypesId??>
+                        <#list offer.paidTypesId as paidType>
+                                ${paidType}
+                        </#list>
+                        </#if>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+
+                            </tr>
+                            <#if offer.characteristics??>
+                                <#list offer.characteristics as characteristic>
+                                    <tr>
+                                        <td>${characteristic.name}</td>
+                                        <td>${characteristic.description}</td>
+                                    </tr>
+                                </#list>
+                            </#if>
+                        </table>
+                    </td>
                     <td>
                         <form method="get" action="/admin/offer-update">
                             <input class="input-field" type="hidden" id="id" name="id" value=${offer.id}>
@@ -51,6 +78,7 @@
         </#if>
     </table>
 
+</div>
 </div>
 </body>
 </html>

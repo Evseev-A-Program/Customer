@@ -27,10 +27,10 @@ public class Address {
 
     private String country;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    @JsonIgnore
-    private Customer customer;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    @JsonIgnore
+//    private Customer customer;
 
     public Address() {
 

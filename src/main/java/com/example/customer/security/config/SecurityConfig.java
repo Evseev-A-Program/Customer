@@ -30,13 +30,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Autowired
 //    private JWTFilter jwtFilter;
 
+//    @Autowired
+//    private MyAuthenticationProvider authProvider;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/").permitAll()
                     .antMatchers("/admin/**").hasAuthority("ADMIN")
                     .antMatchers("/registration/**").permitAll()
                     .antMatchers("/login").permitAll()
@@ -44,9 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/css/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                .formLogin()
+                        .formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/")
@@ -57,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                     .tokenRepository(tokenRepository());
 //                                            .and()
 //                                                    .exceptionHandling();
-        http.csrf().disable();
+
 //        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -70,6 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+      //  auth.authenticationProvider(authProvider);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 }

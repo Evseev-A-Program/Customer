@@ -19,7 +19,7 @@
 <br>
 <a href="/admin/characteristic">Добавить характеристику</a>
 <br>
-<a href="/admin/offer">Добавить товар</a>
+<a href="/admin/offer">Добавить/Изменить товар</a>
 <br>
 <br>
 <br>

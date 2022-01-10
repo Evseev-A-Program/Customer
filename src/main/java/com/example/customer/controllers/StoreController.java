@@ -19,7 +19,9 @@ public class StoreController {
         if (authentication == null) {
             return "redirect:/login";
         }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
+        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
         return "store";
     }
 

@@ -38,7 +38,6 @@ public class CustomerService{
         if (customer == null) {
             throw new CustomerNotFoundException("Customer Not Found");
         }
-        customer.deletePaidType();
         customersDao.deleteById(id);
     }
 
@@ -59,17 +58,11 @@ public class CustomerService{
             throw new CustomerNotFoundException("Customer Not Found");
         }
 
-//        Customer checkCustomer = customersDao.findByEmail(customer.getEmail()).get();
-//        if(checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
-//            throw new CustomerAlreadyExistException("This email is already in use");
-//        }
-//        checkCustomer = customersDao.findByPhoneNumber(customer.getPhoneNumber()).get();
-//        if( checkCustomer != null && !checkCustomer.getId().equals(customer.getId())) {
-//            throw new CustomerAlreadyExistException("This phone number is already in use");
-//        }
-
-        customersDao.save(customer);
+    //    if (!customersDao.findByEmail(customer.getEmail()).isPresent() && !customersDao.findByPhoneNumber(customer.getPhoneNumber()).isPresent()) {
+            customersDao.save(customer);
+     //   } else throw new CustomerAlreadyExistException("Customer already exists");
     }
+
 
 
 

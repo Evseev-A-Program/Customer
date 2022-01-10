@@ -1,14 +1,13 @@
 package com.example.customer.service;
 
 import com.example.customer.forms.LoginForm;
+import com.example.customer.forms.UserForm;
 import com.example.customer.models.Customer;
 import com.example.customer.models.Token;
 import com.example.customer.repository.CustomerDao;
 import com.example.customer.repository.TokenDao;
 import com.example.customer.transfer.transfer.TokenDto;
-import com.example.customer.forms.UserForm;
 import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +30,7 @@ public class LoginService {
     @Autowired
     private CustomerDao customerDao;
 
-    public TokenDto login(LoginForm loginForm) {
+    public TokenDto getToken(LoginForm loginForm) {
         Optional<Customer> userCandidate = customerDao.findByEmail(loginForm.getEmail());
 
         if (userCandidate.isPresent()) {

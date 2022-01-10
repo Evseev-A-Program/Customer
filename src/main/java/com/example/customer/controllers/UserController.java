@@ -34,8 +34,8 @@ public class UserController {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
         model.addAttribute("customer", CustomerDTO.from(details.getCustomer()));
+        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
 
         return "user";
     }
@@ -46,18 +46,30 @@ public class UserController {
         if (authentication == null) {
             return "redirect:/login";
         }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
         model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
         return "paid.types";
     }
 
-    @GetMapping("/paid-types/add")
-    public String addPaidType(ModelMap model, Authentication authentication, String name) {
+    @PostMapping("/paid-types/add")
+    public String addPaidType(Authentication authentication, String name) {
         if (authentication == null) {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         paidTypeService.savePaidType(name, details.getCustomer().getId());
-        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+
+        return "redirect:/user/paid-types";
+    }
+
+    @PostMapping("/paid-types/del")
+    public String deletePaidType(Authentication authentication, String name) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        paidTypeService.deletePaidType(name, details.getCustomer().getId());
 
         return "redirect:/user/paid-types";
     }

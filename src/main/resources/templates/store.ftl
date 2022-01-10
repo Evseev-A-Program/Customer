@@ -4,9 +4,19 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
-<body align="center">
+<body>
+<#function checking paidTypesClients, paidTypesOffer>
+    <#list paidTypesOffer as ptOffer>
+        <#list paidTypesClients as ptClient>
+            <#if ptOffer == ptClient.id>
+                <#return true>
+            </#if>
+        </#list>
+    </#list>
+    <#return false>
+</#function>
 
-<div class="form-style-2">
+<div class="form-style-2" align="center">
     <div class="form-style-2-heading">
         СПИСОК ТОВАРОВ:
     </div>
@@ -54,18 +64,31 @@
                     </td>
 
                     <td>
-                        <form method="post" action="/store">
-                            <input class="input-field" type="hidden" id="name" name="name" value=${offer.id}>
-                            <button type="submit">В корзину</button>
-                        </form>
+
+                        <#if paidTypesClients??>
+                            <#if checking(paidTypesClients, offer.paidTypesId) == true>
+                            <td>
+                                <form method="post" action="/store">
+                                    <input class="input-field" type="hidden" id="name" name="name" value=${offer.id}>
+                                    <button type="submit">В корзину</button>
+                                </form>
+                            </td>
+                            <#else>
+                                <td style="background-color: #ac2925">Не подходящий способ оплаты</td>
+                            </#if>
+
+                        <#else>
+                            <td style="background-color: #ac2925">Не подходящий способ оплаты</td>
+                        </#if>
+
                     </td>
                 </tr>
             </#list>
         </#if>
     </table>
-</div>
 <a href="/">Корзина</a>
 <br>
 <a href="/">Назад</a>
+</div>
 </body>
 </html>

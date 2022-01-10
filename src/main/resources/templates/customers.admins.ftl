@@ -5,11 +5,11 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body align="center">
+<body >
 <#if userNotFound??>
     <div class="alert alert-danger" role="alert">Пользователь не найден</div>
 </#if>
-<div class="form-style-2">
+<div class="form-style-2"  align="center">
     <div class="form-style-2-heading">
         Clients:
     </div>

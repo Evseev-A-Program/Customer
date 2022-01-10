@@ -4,8 +4,8 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body align="center">
-
+<body>
+<div align="center">
 <form method="post" action="/admin/offer-update">
     <div class="form-style-2-heading">Id: ${offerFromServer.id}</div>
     <input class="input-field" type="hidden" id="id" name="id" value=${offerFromServer.id}>
@@ -91,8 +91,9 @@
 <#if categoriesFromServer??>
     <#list categoriesFromServer as category>
         <tr>
-            <td>${category.id}</td>
-            <td>${category.name}</td>
+            <td>id "${category.id}" </td>
+            <td>Name:${category.name}</td>
+            <br>
         </tr>
     </#list>
 </#if>
@@ -111,14 +112,16 @@
 <#if characteristicsFromServer??>
     <#list characteristicsFromServer as characteristic>
         <tr>
-            <td>${characteristic.id}</td>
-            <td>${characteristic.name}</td>
-            <td>${characteristic.description}</td>
+            <td>id "${characteristic.id}" </td>
+            <td>Name:${characteristic.name} </td>
+            <td>Description:${characteristic.description}</td>
+            <br>
         </tr>
     </#list>
 
 </#if>
 <br>
 <a href="/admin/offer">Назад</a>
+</div>
 </body>
 </html>
