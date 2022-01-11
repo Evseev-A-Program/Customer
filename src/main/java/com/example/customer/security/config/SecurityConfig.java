@@ -1,10 +1,12 @@
 package com.example.customer.security.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,10 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -28,27 +31,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
 //    @Autowired
-//    private JWTFilter jwtFilter;
-
+//    private AuthenticationProvider authenticationProvider;
+//
 //    @Autowired
-//    private MyAuthenticationProvider authProvider;
-
+//    private TokenAuthFilter tokenAuthFilter;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+//                .addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class)
+//                .antMatcher("/**")
+//                .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                    .antMatchers("/registration/**").permitAll()
-                    .antMatchers("/login").permitAll()
-                    //.mvcMatchers(HttpMethod.POST,"/login").permitAll()
-                    .antMatchers("/css/**").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/registration", "/login").permitAll()
+                //.mvcMatchers(HttpMethod.POST,"/login").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .anyRequest().authenticated()
                     .and()
-                        .formLogin()
+                    .formLogin()
                     .loginPage("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
@@ -60,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                     .tokenRepository(tokenRepository());
 //                                            .and()
 //                                                    .exceptionHandling();
-
+        http.csrf().disable();
 //        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

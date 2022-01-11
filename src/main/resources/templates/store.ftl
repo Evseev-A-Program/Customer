@@ -22,6 +22,7 @@
     </div>
     <table class="table">
         <tr>
+            <th>id</th>
             <th>Название товара</th>
             <th>Цена</th>
             <th>Категория</th>
@@ -33,6 +34,7 @@
         <#if offersFromServer??>
             <#list offersFromServer as offer>
                 <tr>
+                    <td>${offer.id}</td>
                     <td>${offer.name}</td>
                     <td>${offer.price}</td>
                     <td>${offer.category.name}</td>
@@ -68,8 +70,8 @@
                         <#if paidTypesClients??>
                             <#if checking(paidTypesClients, offer.paidTypesId) == true>
                             <td>
-                                <form method="post" action="/store">
-                                    <input class="input-field" type="hidden" id="name" name="name" value=${offer.id}>
+                                <form method="post" action="/store/add">
+                                    <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offer.id}>
                                     <button type="submit">В корзину</button>
                                 </form>
                             </td>
@@ -86,7 +88,7 @@
             </#list>
         </#if>
     </table>
-<a href="/">Корзина</a>
+<a href="/cart">Корзина</a>
 <br>
 <a href="/">Назад</a>
 </div>

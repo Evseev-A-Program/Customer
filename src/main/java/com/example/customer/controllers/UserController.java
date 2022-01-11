@@ -1,5 +1,6 @@
 package com.example.customer.controllers;
 
+import com.example.customer.clients.OrderClients;
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Address;
@@ -74,10 +75,6 @@ public class UserController {
         return "redirect:/user/paid-types";
     }
 
-
-
-
-
     @GetMapping("/update")
     public String updateCustomerPage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
@@ -103,5 +100,15 @@ public class UserController {
         address.setCountry(userForm.getCountry());
         customerService.saveCustomers(customer);
         return "redirect:/";
+    }
+
+    @PostMapping("/cart")
+    public String getCart(ModelMap model, Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("orders", OrderClients.getOrderByIdCustomer(details.getCustomer().getId()));
+        return "cart";
     }
 }

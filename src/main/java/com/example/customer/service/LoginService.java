@@ -36,7 +36,7 @@ public class LoginService {
         if (userCandidate.isPresent()) {
             Customer customer = userCandidate.get();
 
-           // if (passwordEncoder.matches(loginForm.getPassword(), customer.getHashPassword())) {
+            if (passwordEncoder.matches(loginForm.getPassword(), customer.getHashPassword())) {
                 Token token = Token.builder()
                         .customer(customer)
                         .value(RandomStringUtils.random(10, true, true))
@@ -44,7 +44,7 @@ public class LoginService {
 
                 tokenDao.save(token);
                  return from(token);
-            // }
+             }
         } throw new IllegalArgumentException("Customer not found");
     }
 }

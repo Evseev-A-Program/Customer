@@ -1,6 +1,7 @@
 package com.example.customer.controllers;
 
 import com.example.customer.clients.OfferClients;
+import com.example.customer.clients.OrderClients;
 import com.example.customer.security.details.UserDetailsImpl;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
 import org.springframework.security.core.Authentication;
@@ -16,22 +17,24 @@ public class StoreController {
 
     @GetMapping("/")
     public String getStorePage(ModelMap model, Authentication authentication) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
+
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
         model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
         return "store";
     }
 
-    @PostMapping("/")
-    public String addToCart(ModelMap model, Authentication authentication, Long id) {
+    @PostMapping("/add")
+    public String addToCart(ModelMap model, Authentication authentication, Long offerId) {
         if (authentication == null) {
             return "redirect:/login";
         }
-
-        return "redirect:/user";
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        OrderClients.addOrder(details.getCustomer().getId(), offerId);
+        return "redirect:/store/";
     }
+
+
+
 
 }
