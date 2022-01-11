@@ -6,6 +6,7 @@ import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Address;
 import com.example.customer.models.Customer;
 import com.example.customer.security.details.UserDetailsImpl;
+import com.example.customer.security.token.TokenAuthentication;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
@@ -30,11 +31,11 @@ public class UserController {
     private PaidTypeService paidTypeService;
 
     @GetMapping("/")
-    public String getUserPage(ModelMap model, Authentication authentication) {
-        if (authentication == null) {
+    public String getUserPage(ModelMap model, TokenAuthentication tokenAuthentication) {
+        if (tokenAuthentication == null) {
             return "redirect:/login";
         }
-        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl details = (UserDetailsImpl) tokenAuthentication.getPrincipal();
         model.addAttribute("customer", CustomerDTO.from(details.getCustomer()));
         model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
 

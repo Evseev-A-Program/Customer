@@ -1,6 +1,7 @@
 package com.example.customer.security.config;
 
 
+import com.example.customer.security.token.TokenAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -30,20 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-//    @Autowired
-//    private AuthenticationProvider authenticationProvider;
-//
-//    @Autowired
-//    private TokenAuthFilter tokenAuthFilter;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private TokenAuthFilter tokenAuthFilter;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class)
-//                .antMatcher("/**")
-//                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class)
+                .antMatcher("/**")
+                .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAuthority("USER")
@@ -51,13 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.mvcMatchers(HttpMethod.POST,"/login").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .anyRequest().authenticated()
-                    .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .defaultSuccessUrl("/")
-                    .permitAll()
+//                    .and()
+//                    .formLogin()
+//                    .loginPage("/login")
+//                    .usernameParameter("email")
+//                    .passwordParameter("password")
+//                    .defaultSuccessUrl("/")
+//                    .permitAll()
                     .and()
                             .rememberMe()
                                     .rememberMeParameter("remember-me")
@@ -75,9 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepository;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-      //  auth.authenticationProvider(authProvider);
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//      //  auth.authenticationProvider(authProvider);
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+//    }
 }

@@ -51,7 +51,7 @@ public class LoginController {
     public String login(Authentication authentication, ModelMap modelMap, LoginForm loginForm) {
         TokenDto tokenDto = loginService.getToken(loginForm);
 
-        return "redirect:/user";
+        return "redirect:/user/?token="+tokenDto.getValue();
     }
 
 
