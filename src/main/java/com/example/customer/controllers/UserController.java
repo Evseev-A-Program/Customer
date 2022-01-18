@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import utils.CustomerFromAuthentication;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -31,25 +34,25 @@ public class UserController {
     private PaidTypeService paidTypeService;
 
     @GetMapping("/")
-    public String getUserPage(ModelMap model, TokenAuthentication tokenAuthentication) {
-        if (tokenAuthentication == null) {
+    public String getUserPage(HttpServletResponse response, HttpServletRequest request, ModelMap model, Authentication authentication) throws CustomerNotFoundException {
+        if (authentication == null) {
             return "redirect:/login";
         }
-        UserDetailsImpl details = (UserDetailsImpl) tokenAuthentication.getPrincipal();
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("customer", CustomerDTO.from(details.getCustomer()));
-        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
+        model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
 
         return "user";
     }
 
 
     @GetMapping("/paid-types")
-    public String paidTypePage(ModelMap model, Authentication authentication) {
+    public String paidTypePage(ModelMap model, Authentication authentication) throws CustomerNotFoundException {
         if (authentication == null) {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
+        model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
         model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
         return "paid.types";
     }

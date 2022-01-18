@@ -12,7 +12,7 @@
     <div class="form-style-2-heading">
         Please Login!
     </div>
-    <form method="post" action="/login">
+    <form method="post" action="/auth">
 
         <label for="email">Почта
             <input class="input-field" type="text" id="email" name="email">

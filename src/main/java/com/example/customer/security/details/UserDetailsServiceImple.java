@@ -21,7 +21,7 @@ public class UserDetailsServiceImple implements UserDetailsService {
 
     @SneakyThrows
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetailsImpl loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Customer> user = customerDao.findByEmail(email);
         if (user.isPresent()) {
             return new UserDetailsImpl(user.get());

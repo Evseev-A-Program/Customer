@@ -2,6 +2,7 @@ package com.example.customer.service;
 
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
+import com.example.customer.forms.LoginForm;
 import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
 import com.example.customer.models.State;
@@ -10,15 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.customer.repository.CustomerDao;
 
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Service
 @AllArgsConstructor
 public class CustomerService{
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final CustomerDao customersDao;
 
@@ -61,6 +67,16 @@ public class CustomerService{
     //    if (!customersDao.findByEmail(customer.getEmail()).isPresent() && !customersDao.findByPhoneNumber(customer.getPhoneNumber()).isPresent()) {
             customersDao.save(customer);
      //   } else throw new CustomerAlreadyExistException("Customer already exists");
+    }
+
+    public Customer findByLoginAndPassword(LoginForm loginForm) {
+        Optional<Customer> customer = customersDao.findByEmail(loginForm.getEmail());
+        if (customer.isPresent()) {
+            if (passwordEncoder.matches(loginForm.getPassword(), customer.get().getHashPassword())) {
+                return customer.get();
+            }
+        }
+        return null;
     }
 
 
