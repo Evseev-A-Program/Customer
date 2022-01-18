@@ -41,18 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAuthority("USER")
-                .antMatchers("/registration", "/login").permitAll()
+                .antMatchers("/registration", "/login", "/auth").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .defaultSuccessUrl("/")
-                    .loginProcessingUrl("/auth")
-                    .permitAll()
-                    .and()
+//                    .formLogin()
+//                    .loginPage("/login")
+//                    .usernameParameter("email")
+//                    .passwordParameter("password")
+//                    .defaultSuccessUrl("/")
+//                    .loginProcessingUrl("/auth")
+//                    .permitAll()
+//                    .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 //                            .rememberMe()
 //                                    .rememberMeParameter("remember-me")
@@ -70,9 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       // auth.authenticationProvider(authProvider);
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//       // auth.authenticationProvider(authProvider);
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+//    }
 }

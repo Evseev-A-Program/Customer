@@ -35,7 +35,7 @@
 <br>
 <a href="/user/paid-types">Способы оплаты</a>
 <br>
-<a href="/logout">Выход</a>
+<a href="/exit">Выход</a>
 </div>
 </body>
 </html>
