@@ -23,6 +23,6 @@
 <br>
 <br>
 <br>
-<a href="/logout">Выход</a>
+<a href="/exit">Выход</a>
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,15 +38,17 @@ public class ProfileController {
     }
 
     @GetMapping("/exit")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         List<Cookie> cookies = Arrays.asList(request.getCookies());
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Authorization"))
+            if (cookie.getName().equals("Authorization")) {
                 cookie.setValue("");
                 cookie.setMaxAge(0);
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null, null, null));
-        }
-        return "redirect:/login";
+                response.addCookie(cookie);
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null, null, null));
+            }
+                }
+        return "redirect:/";
     }
 
 }

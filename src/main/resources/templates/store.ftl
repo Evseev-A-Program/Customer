@@ -88,7 +88,7 @@
             </#list>
         </#if>
     </table>
-<a href="/cart">Корзина</a>
+<a href="/user/cart">Корзина</a>
 <br>
 <a href="/">Назад</a>
 </div>

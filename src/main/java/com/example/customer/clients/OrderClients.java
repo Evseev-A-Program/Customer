@@ -12,21 +12,31 @@ public class OrderClients {
 
     public static void addOrder(Long idCustomer, Long idOffer)
     {
-        final String url = "http://localhost:8082/orders/add?idCustomer={1}&idOffer={2}";
+        final String url = "http://localhost:8082/orders/add?customerId={1}&offerId={2}";
         RestTemplate restTemplate = new RestTemplate();
         Object customer = idCustomer;
         Object offer = idOffer;
         restTemplate.getForEntity(url, String.class, customer, offer);
     }
 
-    public static List<Object> getOrderByIdCustomer(Long id)
+    public static Object getOrderByIdCustomer(Long id)
     {
-        final String url = "http://localhost:8082/offers/get?="+id;
         RestTemplate restTemplate = new RestTemplate();
+        Object customerId = id;
+
+        final String url = "http://localhost:8082/orders/get?customerId=" + customerId;
 
         ParameterizedTypeReference<List<Object>> pr = new ParameterizedTypeReference<List<Object>>() {};
         ResponseEntity<List<Object>> exchange = restTemplate.exchange(url, HttpMethod.GET, null, pr);
 
         return exchange.getBody();
+    }
+
+    public static void buyOrder(Long id)
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        Object customerId = id;
+        final String url = "http://localhost:8082/orders/buy?customerId=" + customerId;
+        restTemplate.postForEntity(url, customerId, String.class);
     }
 }

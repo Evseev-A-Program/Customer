@@ -6,7 +6,6 @@ import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.models.Address;
 import com.example.customer.models.Customer;
 import com.example.customer.security.details.UserDetailsImpl;
-import com.example.customer.security.token.TokenAuthentication;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.customerDTO.CustomerDTO;
@@ -53,7 +52,7 @@ public class UserController {
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
-        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypes());
+        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypesForClients());
         return "paid.types";
     }
 
@@ -106,7 +105,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/cart")
+    @GetMapping("/cart")
     public String getCart(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
@@ -114,5 +113,15 @@ public class UserController {
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("orders", OrderClients.getOrderByIdCustomer(details.getCustomer().getId()));
         return "cart";
+    }
+
+    @PostMapping("/cart/buy")
+    public String buy(ModelMap model, Authentication authentication) {
+        if (authentication == null) {
+            return "redirect:/login";
+        }
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        OrderClients.buyOrder(details.getCustomer().getId());
+        return "redirect:/user/cart";
     }
 }

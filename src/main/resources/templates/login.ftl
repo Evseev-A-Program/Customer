@@ -23,11 +23,13 @@
         </label>
         <br>
         <label for="remember-me">
-            <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня
+            <input type="checkbox" id="rememberMe" name="rememberMe" value="true">Запомнить меня
         </label>
         <input type="submit" value="Логин">
     </form>
     <a href="/registration">Регистрация</a>
+    <br>
+    <a href="/store/">Список товаров</a>
 </div>
 </body>
 </html>

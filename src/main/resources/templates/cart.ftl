@@ -23,15 +23,27 @@
         <#if orders??>
             <#list orders as order>
                 <tr>
-                    <th>
+                    <td>
                         <#list order.offers as offer>
                             ${offer}
                         </#list>
-                    </th>
-                    <th> ${order.}</th>
-                    <th>Статус оплаты</th>
-                    <th>Статус доставки</th>
-                    <th> </th>
+                    </td>
+
+                    <td>
+                        <#if order.deliveryTime??>
+                            ${order.deliveryTime}
+                        </#if>
+                    </td>
+                    <td>${order.paid}</td>
+                    <td>${order.status}</td>
+                    <td>
+                        <#if order.paid == "false">
+                            <form method="post" action="/user/cart/buy">
+                                <input class="input-field" type="hidden" id="id" name="id" value=${order.customer}>
+                                <button type="submit">Оплатить</button>
+                            </form>
+                        </#if>
+                    </td>
 
                 </tr>
             </#list>

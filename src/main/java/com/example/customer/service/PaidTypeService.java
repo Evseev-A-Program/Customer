@@ -48,11 +48,20 @@ public class PaidTypeService {
 
     public Iterable<PaidType> findPaidTypeByIdCustomer(Long id) throws CustomerNotFoundException {
         Customer customer = customerService.findCustomerById(id);
-        return customer.getPaidTypes();
+        return customer.getPaidTypes().stream()
+                .filter(x -> x.getState()!=State.BANNED)
+                .collect(Collectors.toList());
     }
 
     public Iterable<PaidType> findAllPaidTypes(){
-        return  paidTypeDao.findAll();
+        return paidTypeDao.findAll();
+    }
+
+    public Iterable<PaidType> findAllPaidTypesForClients(){
+        List<PaidType> paidTypes = (List<PaidType>) paidTypeDao.findAll();
+        return  paidTypes.stream()
+                .filter(x -> x.getState()!=State.BANNED)
+                .collect(Collectors.toList());
     }
 
     public void deletePaidTypeById(Long id) throws PaidTypeNotFoundException, PaidTypeLinkedToUserException {

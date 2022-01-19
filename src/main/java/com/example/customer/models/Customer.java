@@ -50,9 +50,6 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "paid_type_id"))
     private Set<PaidType> paidTypes;
 
-    @OneToMany(mappedBy = "customer")
-    Set<Token> tokens;
-
     public void addPaidType(PaidType paidType) {
         paidTypes.add(paidType);
     }

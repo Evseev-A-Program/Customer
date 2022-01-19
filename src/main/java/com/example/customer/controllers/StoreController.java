@@ -17,10 +17,13 @@ public class StoreController {
 
     @GetMapping("/")
     public String getStorePage(ModelMap model, Authentication authentication) {
+        if (authentication != null) {
+            UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+            model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
+        }
 
-        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
-        model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
+
         return "store";
     }
 
