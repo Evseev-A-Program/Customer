@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
-<body >
+<body class="body-profile">
 <div class="form-style-2" align="center">
     <div class="form-style-2-heading" >
         Ваши сопособы оплаты:

@@ -5,7 +5,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <title>Admin Page</title>
 </head>
-<body align="center">
+<body align="center" class="body-profile">
 <h1 class="form-style-1-heading">АДМИН</h1>
 <br>
 <div class="form-style-2-heading">${customer.firstName} ${customer.lastName}</div>

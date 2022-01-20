@@ -20,51 +20,37 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-
     @Autowired
     private JwtProvider jwtProvider;
-
-
-    @Autowired
-    private PaidTypeService paidTypeService;
-
 
     @Autowired
     private CustomerService customerService;
 
     @GetMapping("/login")
-    public String getLoginPage(Authentication authentication, ModelMap modelMap, HttpServletRequest request) {
+    public String getLoginPage(Authentication authentication, ModelMap modelMap, HttpServletRequest request, Boolean error) {
         if (authentication != null) {
             return "redirect:/";
         }
 
-        if (request.getParameterMap().containsKey("error")) {
+        if (error!=null) {
             modelMap.addAttribute("error", true);
         }
         return "login";
     }
 
-//    @GetMapping("/login-in")
-//    public String getLoginToken(Authentication authentication, ModelMap modelMap, HttpServletRequest request) {
-//
-//        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
-//
-//        modelMap.addAttribute("token", token);
-//
-//        return "token";
-//    }
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public String login(ModelMap model, LoginForm loginForm, HttpServletResponse response) throws CustomerNotFoundException {
         Customer customer = customerService.findByLoginAndPassword(loginForm);
         if (customer == null) {
-            return "redirect:/login";
+            return "redirect:/login?error=true";
         }
         String token = jwtProvider.generateToken(loginForm.getEmail());
-        // Cookie cookie = new Cookie("token", token);
         Cookie cookie = new Cookie("Authorization", "Bearer" + token);
-        cookie.setMaxAge(500);
+        if (loginForm.getRememberMe() == null) cookie.setMaxAge(500);
+        else cookie.setMaxAge(-1);
         response.addCookie(cookie);
+
         return "redirect:/";
     }
 

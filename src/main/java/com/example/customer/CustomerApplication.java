@@ -14,11 +14,6 @@ public class CustomerApplication {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public EmbeddedServletContainerCustomizer containerCustomizer() {
-//        return container -> container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error.ftl"));
-//    }
-
     public static void main(String[] args) {
         SpringApplication.run(CustomerApplication.class, args);
     }

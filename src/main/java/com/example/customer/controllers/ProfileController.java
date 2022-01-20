@@ -48,7 +48,7 @@ public class ProfileController {
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null, null, null));
             }
                 }
-        return "redirect:/";
+        return "redirect:/login";
     }
 
 }

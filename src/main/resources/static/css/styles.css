@@ -130,3 +130,15 @@
 .table tbody tr:nth-child(even){
     background: #f8f8f8!important;
 }
+
+.body-log-reg {
+    background-image: url("https://aduvan.ru/wp-content/uploads/2020/07/StockSnap_A0DYKMDRAL-1-1024x683.jpg");
+}
+
+.body-store {
+    background-image: url("http://don16obqbay2c.cloudfront.net/wp-content/uploads/ru/Best-e-commerce-themes-for-WP-1492182871-1492431991.png");
+}
+
+.body-profile {
+    background-image: url("https://clipart-db.ru/file_content/rastr/background_024.jpg");
+}

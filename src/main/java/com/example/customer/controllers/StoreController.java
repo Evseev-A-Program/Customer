@@ -21,6 +21,9 @@ public class StoreController {
             UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
             model.addAttribute("paidTypesClients", details.getCustomer().getPaidTypes());
         }
+        else {
+            model.addAttribute("authentication", false);
+        }
 
         model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
 

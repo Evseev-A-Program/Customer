@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="body-profile">
 <div align="center">
 <form method="post" action="/admin/offer-update">
     <div class="form-style-2-heading">Id: ${offerFromServer.id}</div>

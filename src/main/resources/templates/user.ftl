@@ -3,8 +3,11 @@
 <head>
   <link href="/css/styles.css" rel="stylesheet" type="text/css">
   <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+
+    </style>
 </head>
-<body>
+<body class="body-profile">
 <div  align="center">
 <div class="form-style-2-heading">Имя: ${customer.firstName}</div>
 <div class="form-style-2-heading">Фамилия: ${customer.lastName}</div>

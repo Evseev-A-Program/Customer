@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body class="body-store" align="center">
 <#function checking paidTypesClients, paidTypesOffer>
     <#list paidTypesOffer as ptOffer>
         <#list paidTypesClients as ptClient>
@@ -66,22 +66,25 @@
                     </td>
 
                     <td>
-
-                        <#if paidTypesClients??>
+                        <#if authentication??>
+                        <td style="background-color: #ac2925">Авторизируйтесь!</td>
+                    <#else>
+                            <#if paidTypesClients??>
                             <#if checking(paidTypesClients, offer.paidTypesId) == true>
-                            <td>
-                                <form method="post" action="/store/add">
-                                    <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offer.id}>
-                                    <button type="submit">В корзину</button>
-                                </form>
-                            </td>
-                            <#else>
-                                <td style="background-color: #ac2925">Не подходящий способ оплаты</td>
-                            </#if>
+                        <td>
+                            <form method="post" action="/store/add">
+                                <input class="input-field" type="hidden" id="offerId" name="offerId" value=${offer.id}>
+                                <button type="submit">В корзину</button>
+                            </form>
+                        </td>
+                        <#else>
+                            <td style="background-color: #ac2925">Не подходящий способ оплаты</td>
+                        </#if>
 
                         <#else>
                             <td style="background-color: #ac2925">Не подходящий способ оплаты</td>
                         </#if>
+                    </#if>
 
                     </td>
                 </tr>

@@ -73,6 +73,7 @@ public class CustomerService{
         Optional<Customer> customer = customersDao.findByEmail(loginForm.getEmail());
         if (customer.isPresent()) {
             if (passwordEncoder.matches(loginForm.getPassword(), customer.get().getHashPassword())) {
+                if (customer.get().getState().equals(State.BANNED))  return null;
                 return customer.get();
             }
         }

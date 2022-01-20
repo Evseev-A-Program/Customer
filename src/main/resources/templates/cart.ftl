@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body class="body-store">
 
 <div class="form-style-2" align="center">
     <div class="form-style-2-heading">
@@ -50,9 +50,8 @@
         </#if>
 
     </table>
-    <a href="/">Корзина</a>
     <br>
-    <a href="/">Назад</a>
+    <a href="/store/">Назад</a>
 </div>
 </body>
 </html>

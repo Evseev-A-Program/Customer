@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body align="center">
+<body class="body-log-reg">
 <#if error??>
     <div class="alert alert-danger" role="alert">Такой пользователь уже существует</div>
 </#if>

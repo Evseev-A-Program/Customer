@@ -5,7 +5,7 @@
     <link href="/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body >
+<body class="body-profile">
 <#if userNotFound??>
     <div class="alert alert-danger" role="alert">Пользователь не найден</div>
 </#if>

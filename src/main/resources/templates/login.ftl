@@ -4,7 +4,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="body-log-reg">
 <#if error??>
     <div class="alert alert-danger" role="alert">Почта или пароль введены неверно</div>
 </#if>
@@ -12,7 +12,7 @@
     <div class="form-style-2-heading">
         Please Login!
     </div>
-    <form method="post" action="/auth">
+    <form method="post" action="/login">
 
         <label for="email">Почта
             <input class="input-field" type="text" id="email" name="email">
@@ -27,9 +27,10 @@
         </label>
         <input type="submit" value="Логин">
     </form>
-    <a href="/registration">Регистрация</a>
-    <br>
     <a href="/store/">Список товаров</a>
+    <br>
+    <br>
+    <a href="/registration">Регистрация</a>
 </div>
 </body>
 </html>
