@@ -5,7 +5,6 @@ import com.example.customer.forms.LoginForm;
 import com.example.customer.models.Customer;
 import com.example.customer.security.token.JwtProvider;
 import com.example.customer.service.CustomerService;
-import com.example.customer.service.PaidTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -53,6 +52,4 @@ public class LoginController {
 
         return "redirect:/";
     }
-
-
 }

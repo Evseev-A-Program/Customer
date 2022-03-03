@@ -7,6 +7,7 @@ import com.example.customer.models.Customer;
 import com.example.customer.models.Role;
 import com.example.customer.models.State;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
