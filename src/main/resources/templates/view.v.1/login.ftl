@@ -1,7 +1,7 @@
 <#ftl encoding='UTF-8'>
 <html>
 <head>
-    <link href="/static/css/styles.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body class="body-log-reg">

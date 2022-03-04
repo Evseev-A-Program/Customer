@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="/static/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body class="body-profile">

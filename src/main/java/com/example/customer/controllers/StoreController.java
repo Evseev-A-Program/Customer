@@ -30,7 +30,7 @@ public class StoreController {
             model.addAttribute("authentication", false);
         }
 
-        model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
+         model.addAttribute("offersFromServer", OfferClients.getOffersNotNull());
 
         return "store";
     }
