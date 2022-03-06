@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="static/css/profile.style.css" th:href="@{/css/profile.style.css}">
+    <title>User</title>
+
 </head>
 <body>
+<p><img src="https://png.pngtree.com/png-vector/20191018/ourmid/pngtree-user-icon-isolated-on-abstract-background-png-image_1824979.jpg" width="100" height="100"></p>
+<br>
+<br>
+<a href="/store/" class="button-1">Каталог товаров</a>
+<br>
+<br>
+<div>
+    <ol class="ball">
+        <li><a th:text="${customer.firstName}"></a></li>
+        <li><a th:text="${customer.lastName}"></a></li>
+        <li><a th:text="${customer.phoneNumber}"></a></li>
+        <li><a th:text="${customer.city}" ></a></li>
+        <li><a th:text="${customer.street}"></a></li>
+        <li><a th:text="${customer.country}"></a></li>
+    </ol>
+</div>
 
+<br>
+<br>
+<a href="" class="button-1">Редактировать данные</a>
 </body>
 </html>

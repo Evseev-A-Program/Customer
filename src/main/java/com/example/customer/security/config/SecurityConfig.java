@@ -23,12 +23,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration", "/login").permitAll()
                 .antMatchers("/static/css/**").permitAll()
                 .antMatchers("/store").permitAll()
+                .antMatchers("/offer").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
+
     }
+
 
 
 }

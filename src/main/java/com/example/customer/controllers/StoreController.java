@@ -45,6 +45,13 @@ public class StoreController {
         return "redirect:/store/";
     }
 
+    @GetMapping("/offer")
+    public String getOneOffer(ModelMap model, Authentication authentication, Long offerId) {
+
+        model.addAttribute("offer", OfferClients.getOffer(offerId));
+        return "offer";
+    }
+
 
 
 
