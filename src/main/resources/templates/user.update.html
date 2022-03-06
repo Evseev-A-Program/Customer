@@ -2,9 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="static/css/user.update.style.css" th:href="@{/css/user.update.style.css}">
 </head>
 <body>
+<div class="wrapper">
+    <div class="left_block">
+        <form class="decor" action="/user/update" method="post" name="form">
+            <div class="form-left-decoration"></div>
+            <div class="form-right-decoration"></div>
+            <div class="circle"></div>
+            <div class="form-inner">
+                <h3>Редактирование данных</h3>
+                <input type="text" id="firstName" name="firstName" th:value="${customer.firstName}">
+                <input type="text" id="lastName" name="lastName" th:value="${customer.lastName}">
+                <input type="text" id="phone-number" name="phoneNumber" th:value="${customer.phoneNumber}">
+                <input type="text" id="city" name="city" th:value="${customer.city}">
+                <input type="text" id="street" name="street" th:value="${customer.street}">
+                <input type="text"  id="country" name="country" th:value="${customer.country}">
+                <input type="submit" value="Подтвердить изменения">
+            </div>
+        </form>
+    </div>
+    <div class="right_block">
+        <ul class="dbl-border">
+            <th:block th:each="paidType : ${paidTypesClients}">
+                <div th:switch="${paidType.id}">
+                    <li th:case="1"><a>Рассрочка</a></li>
+                    <li th:case="2"><a>Наличные (при получении)</a></li>
+                    <li th:case="3"><a>Терминал</a></li>
+                    <li th:case="4"><a>Баланс телефона</a></li>
+                    <li th:case="5"><a>Перевод</a></li>
+                    <li th:case="6"><a>Карта Банка</a></li>
+                </div>
+            </th:block>
+        </ul>
+        <table>
+            <tr>
+                <th>Способ оплаты</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="pt : ${paidTypesFromServer}">
+                <div th:switch="${pt.id}">
+                    <td th:case="1"><a>Рассрочка</a></td>
+                    <td th:case="2"><a>Наличные (при получении)</a></td>
+                    <td th:case="3"><a>Терминал</a></td>
+                    <td th:case="4"><a>Баланс телефона</a></td>
+                    <td th:case="5"><a>Перевод</a></td>
+                    <td th:case="6"><a>Карта Банка</a></td>
+                </div>
+                <td>
+                    <form method="post" action="/user/paid-types/add">
+                        <input class="input-field" type="hidden" id="name_add" name="name" th:value='${pt.name}'>
+                        <button type="submit">Добавить</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/user/paid-types/del">
+                        <input class="input-field" type="hidden" id="name_del" name="name" th:value='${pt.name}'>
+                        <button type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
 
 </body>
 </html>

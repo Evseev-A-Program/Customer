@@ -45,16 +45,16 @@ public class UserController {
     }
 
 
-    @GetMapping("/paid-types")
-    public String paidTypePage(ModelMap model, Authentication authentication) throws CustomerNotFoundException {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
-        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypesForClients());
-        return "paid.types";
-    }
+//    @GetMapping("/paid-types")
+//    public String paidTypePage(ModelMap model, Authentication authentication) throws CustomerNotFoundException {
+//        if (authentication == null) {
+//            return "redirect:/login";
+//        }
+//        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+//        model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
+//        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypesForClients());
+//        return "user.update";
+//    }
 
     @PostMapping("/paid-types/add")
     public String addPaidType(Authentication authentication, String name) {
@@ -64,7 +64,7 @@ public class UserController {
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         paidTypeService.savePaidType(name, details.getCustomer().getId());
 
-        return "redirect:/user/paid-types";
+        return "redirect:/user/update";
     }
 
     @PostMapping("/paid-types/del")
@@ -75,16 +75,19 @@ public class UserController {
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         paidTypeService.deletePaidType(name, details.getCustomer().getId());
 
-        return "redirect:/user/paid-types";
+        return "redirect:/user/update";
     }
 
     @GetMapping("/update")
-    public String updateCustomerPage(ModelMap model, Authentication authentication) {
+    public String updateCustomerPage(ModelMap model, Authentication authentication) throws CustomerNotFoundException {
         if (authentication == null) {
             return "redirect:/login";
         }
         model.addAttribute("customer", CustomerFromAuthentication.getCustomer(authentication));
-        return "customer.update";
+        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("paidTypesClients", paidTypeService.findPaidTypeByIdCustomer(details.getCustomer().getId()));
+        model.addAttribute("paidTypesFromServer", paidTypeService.findAllPaidTypesForClients());
+        return "user.update";
     }
 
     @PostMapping("/update")

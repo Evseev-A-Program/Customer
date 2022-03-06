@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="static/css/profile.style.css" th:href="@{/css/profile.style.css}">
+    <link rel="stylesheet" type="text/css" href="static/css/user.style.css" th:href="@{/css/user.style.css}">
     <title>User</title>
 
 </head>
@@ -13,19 +13,37 @@
 <a href="/store/" class="button-1">Каталог товаров</a>
 <br>
 <br>
-<div>
-    <ol class="ball">
-        <li><a th:text="${customer.firstName}"></a></li>
-        <li><a th:text="${customer.lastName}"></a></li>
-        <li><a th:text="${customer.phoneNumber}"></a></li>
-        <li><a th:text="${customer.city}" ></a></li>
-        <li><a th:text="${customer.street}"></a></li>
-        <li><a th:text="${customer.country}"></a></li>
-    </ol>
+<br>
+<a href="/user/update" class="button-2">Редактировать данные</a>
+<br>
+<br>
+<div class="wrapper">
+    <div class="left_block">
+        <ol class="ball">
+            <li><a th:text="${customer.firstName}"></a></li>
+            <li><a th:text="${customer.lastName}"></a></li>
+            <li><a th:text="${customer.phoneNumber}"></a></li>
+            <li><a th:text="${customer.city}" ></a></li>
+            <li><a th:text="${customer.street}"></a></li>
+            <li><a th:text="${customer.country}"></a></li>
+        </ol>
+    </div>
+    <div class="right_block">
+        <ul class="dbl-border">
+            <th:block th:each="paidType : ${paidTypesClients}">
+                <div th:switch="${paidType.id}">
+                    <li th:case="1"><a>Рассрочка</a></li>
+                    <li th:case="2"><a>Наличные (при получении)</a></li>
+                    <li th:case="3"><a>Терминал</a></li>
+                    <li th:case="4"><a>Баланс телефона</a></li>
+                    <li th:case="5"><a>Перевод</a></li>
+                    <li th:case="6"><a>Карта Банка</a></li>
+                </div>
+            </th:block>
+        </ul>
+    </div>
 </div>
 
-<br>
-<br>
-<a href="" class="button-1">Редактировать данные</a>
+
 </body>
 </html>
