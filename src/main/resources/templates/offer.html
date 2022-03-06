@@ -2,23 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="static/css/style.store.css" th:href="@{/css/style.store.css}">
+<!--    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">-->
+    <link rel="stylesheet" type="text/css" href="static/css/store.style.css" th:href="@{/css/store.style.css}">
 </head>
 <body>
 <div class="col-sm-4">
     <div class="product">
         <div class="product-img">
-
+            <img th:src="${offer.image}">
         </div>
         <p class="product-title" th:utext="${offer.name}"></p>
         <p th:utext="${offer.price}" class="product-desc"></p>
-        <p th:utext="${offer.category.name}" class="product-price"></p>
         <form action="/store/add" method="post" name="form">
             <input class="input-field" type="hidden" id="offerId" name="offerId" th:value="${offer.id}">
             <button type="submit">В корзину</button>
         </form>
-
+        <p th:utext="${offer.characteristic.name}" class="product-desc"></p>
+        <p th:utext="${offer.characteristic.description}" class="product-desc"></p>
+        <br>
+        <p th:utext="${offer.category.name}" class="product-price"></p>
     </div>
 </div>
 </body>
