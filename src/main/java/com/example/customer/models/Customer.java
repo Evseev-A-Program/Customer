@@ -35,8 +35,8 @@ public class Customer {
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
-    @Enumerated(value = EnumType.STRING)
-    private State state;
+
+    private Boolean active;
 
     @Column(unique = true)
     private String phoneNumber;

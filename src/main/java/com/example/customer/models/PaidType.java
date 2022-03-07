@@ -24,8 +24,7 @@ public class PaidType {
     @Enumerated(EnumType.STRING)
     private EPaidType name;
 
-    @Enumerated(value = EnumType.STRING)
-    private State state;
+    private Boolean active;
 
     @ManyToMany(mappedBy = "paidTypes")
     @JsonIgnore

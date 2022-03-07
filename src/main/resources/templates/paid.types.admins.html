@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/css/admin.style.css" th:href="@{/css/admin.style.css}">
+</head>
+<body>
+<br>
+<br>
+<a href="/admin/" class="double-border-button">Назад</a>
+<br>
+<br>
+<table class="table_dark">
+    <tr>
+        <th>Способ оплаты</th>
+        <th></th>
+    </tr>
+    <tr th:each="pt : ${paidTypesFromServer}">
+        <div th:switch="${pt.id}">
+            <td th:case="1"><a>Рассрочка</a></td>
+            <td th:case="2"><a>Наличные (при получении)</a></td>
+            <td th:case="3"><a>Терминал</a></td>
+            <td th:case="4"><a>Баланс телефона</a></td>
+            <td th:case="5"><a>Перевод</a></td>
+            <td th:case="6"><a>Карта Банка</a></td>
+        </div>
+        <div th:switch="${pt.active}">
+            <td th:case="true">
+                <form method="post" action="/admin/paid-types/banned">
+                    <input class="input-field" type="hidden" id="id_ban" name="id" th:value='${pt.id}'>
+                    <button type="submit" style="background-color: #ac2925">Заблокировать</button>
+                </form>
+            </td>
+            <td th:case="false">
+                <form method="post" action="/admin/paid-types/unbanned">
+                    <input class="input-field" type="hidden" id="id_unban" name="id" th:value='${pt.id}'>
+                    <button type="submit" style="background-color: #4cae4c">Разблокировать</button>
+                </form>
+            </td>
+        </div>
+    </tr>
+</table>
+</body>
+</html>

@@ -40,6 +40,10 @@ public class CustomerService{
         return  customersDao.findAll();
     }
 
+    public Iterable<Customer> findCustomersByFistNameOfLastName(String search){
+        return   customersDao.findByFirstNameOrLastName(search);
+    }
+
     public void deleteCustomersById(Long id) throws CustomerNotFoundException {
         Customer customer = customersDao.findById(id).get();
         if (customer == null) {
@@ -50,13 +54,13 @@ public class CustomerService{
 
     public void BanCustomerById(Long id){
         Customer customer = customersDao.findById(id).get();
-        customer.setState(State.BANNED);
+        customer.setActive(false);
         customersDao.save(customer);
     }
 
     public void UnBanCustomerById(Long id){
         Customer customer = customersDao.findById(id).get();
-        customer.setState(State.ACTIVE);
+        customer.setActive(true);
         customersDao.save(customer);
     }
 
@@ -74,7 +78,7 @@ public class CustomerService{
         Optional<Customer> customer = customersDao.findByEmail(loginForm.getEmail());
         if (customer.isPresent()) {
             if (passwordEncoder.matches(loginForm.getPassword(), customer.get().getHashPassword())) {
-                if (customer.get().getState().equals(State.BANNED))  return null;
+                if (!customer.get().getActive())  return null;
                 return customer.get();
             }
         }

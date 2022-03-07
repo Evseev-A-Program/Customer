@@ -32,7 +32,7 @@ public class RegistrationService implements RegistrationDao {
                     .firstName(userForm.getFirstName())
                     .lastName(userForm.getLastName())
                     .role(Role.USER)
-                    .state(State.ACTIVE)
+                    .active(true)
                     .address(Address.builder()
                             .city(userForm.getCity())
                             .street(userForm.getStreet())

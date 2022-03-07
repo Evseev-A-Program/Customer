@@ -49,7 +49,8 @@ public class PaidTypeService {
     public Iterable<PaidType> findPaidTypeByIdCustomer(Long id) throws CustomerNotFoundException {
         Customer customer = customerService.findCustomerById(id);
         return customer.getPaidTypes().stream()
-                .filter(x -> x.getState()!=State.BANNED)
+             //   .filter(x -> x.getState()!=State.BANNED)
+                .filter(x -> !x.getActive())
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +61,8 @@ public class PaidTypeService {
     public Iterable<PaidType> findAllPaidTypesForClients(){
         List<PaidType> paidTypes = (List<PaidType>) paidTypeDao.findAll();
         return  paidTypes.stream()
-                .filter(x -> x.getState()!=State.BANNED)
+              //  .filter(x -> x.getState()!=State.BANNED)
+                .filter(x -> !x.getActive())
                 .collect(Collectors.toList());
     }
 
@@ -75,13 +77,13 @@ public class PaidTypeService {
 //            throw new PaidTypeLinkedToUserException("PaidType is already linked to the offer");
 //        }
 
-        paidType.setState(State.BANNED);
+        paidType.setActive(false);
         paidTypeDao.save(paidType);
     }
 
     public void activePaidTypeById(Long id) throws PaidTypeNotFoundException, PaidTypeLinkedToUserException {
         PaidType paidType = findPaidTypeById(id);
-        paidType.setState(State.ACTIVE);
+        paidType.setActive(true);
         paidTypeDao.save(paidType);
     }
 

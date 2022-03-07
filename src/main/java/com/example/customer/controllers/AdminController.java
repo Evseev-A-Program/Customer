@@ -34,10 +34,16 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/customers")
+    @GetMapping("/users")
     public String getCustomersPage(ModelMap model) {
-        model.addAttribute("customersFromServer", customerService.findAllCustomers());
-        return "customers.admins";
+       // model.addAttribute("customersFromServer", customerService.findAllCustomers());
+        return "users.admins";
+    }
+    @GetMapping("/users/get")
+    public String getCustomers(ModelMap model, String search) {
+        model.addAttribute("customersFromServer", customerService.findCustomersByFistNameOfLastName(search));
+        model.addAttribute("search", search);
+        return "users.admins";
     }
 
     @GetMapping("/paid-types")
@@ -47,33 +53,28 @@ public class AdminController {
     }
 
     @PostMapping("/banned")
-    public String CustomerBannedById(ModelMap model, Long id) throws CustomerNotFoundException {
-        try {
+    public String CustomerBannedById(ModelMap model, Long id, String search) throws CustomerNotFoundException {
             customerService.BanCustomerById(id);
-        } catch (Exception e) {
-            model.addAttribute("userNotFound", true);
-        }
-        return getCustomersPage(model);
+        model.addAttribute("customersFromServer", customerService.findCustomersByFistNameOfLastName(search));
+        model.addAttribute("search", search);
+        return "users.admins";
     }
 
     @PostMapping("/unbanned")
-    public String CustomerUnBannedById(ModelMap model, Long id) throws CustomerNotFoundException {
-        try {
+    public String CustomerUnBannedById(ModelMap model, Long id, String search) throws CustomerNotFoundException {
             customerService.UnBanCustomerById(id);
-        } catch (Exception e) {
-            model.addAttribute("userNotFound", true);
-        }
-
-        return getCustomersPage(model);
+        model.addAttribute("customersFromServer", customerService.findCustomersByFistNameOfLastName(search));
+        model.addAttribute("search", search);
+        return "users.admins";
     }
 
-    @PostMapping("/paid-types/delete")
+    @PostMapping("/paid-types/banned")
     public String deletePaidType(Long id) throws PaidTypeLinkedToUserException, PaidTypeNotFoundException {
         paidTypeService.deletePaidTypeById(id);
         return "redirect:/admin/paid-types";
     }
 
-    @PostMapping("/paid-types/active")
+    @PostMapping("/paid-types/unbanned")
     public String activePaidType(Long id) throws PaidTypeLinkedToUserException, PaidTypeNotFoundException {
         paidTypeService.activePaidTypeById(id);
         return "redirect:/admin/paid-types";
