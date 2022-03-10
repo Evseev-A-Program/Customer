@@ -113,7 +113,7 @@ body {
 .dbl-border a:hover {background: #D4D8D9;}
 
 div.wrapper {
-    width:500px;
+    width:700px;
 }
 div.left_block {
     float:left;
@@ -121,7 +121,7 @@ div.left_block {
 }
 div.right_block {
     float:right;
-    width:250px;
+    width:450px;
 }
 
 

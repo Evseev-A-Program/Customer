@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/css/admin.offers.style.css" th:href="@{/css/admin.offers.style.css}">
+</head>
+<body>
+<br>
+<a href="/admin/" class="double-border-button">Назад</a>
+<br>
+<ul class="border">
+    <th:block th:each="category : ${categoriesFromServer}">
+        <li><input style="color:transparent;" type="button" th:utext="${category.name}" th:value="${category.id}" onclick="formON(this.value)"></input></li>
+    </th:block>
+</ul>
+
+<form class="decor" id = "form_add_offer" action="/admin/offers" method="post">
+    <div class="form-left-decoration"></div>
+    <div class="form-right-decoration"></div>
+    <div class="circle"></div>
+    <div class="form-inner">
+        <h3>Добавить товар</h3>
+        <input type="text" placeholder="Название" name="name">
+        <input type="text" placeholder="Стоимость" name="price">
+        <input type="text" placeholder="Фото: /offers/..." name="image">
+        <input type="text" placeholder="Модель" name="characteristicName">
+        <input class="input-field" type="hidden" id="categoryId" name="categoryId">
+        <textarea placeholder="Описание" rows="3" name="characteristicDescription"></textarea>
+        <input type="submit" value="Отправить">
+    </div>
+</form>
+<script>
+    document.getElementById("form_add_offer").style.display = "none"
+    function formON(id) {
+        document.getElementById("categoryId").value = id
+        document.getElementById("form_add_offer").style.display = "block"
+    }
+</script>
+</body>
+</html>

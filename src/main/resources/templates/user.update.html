@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="static/css/user.update.style.css" th:href="@{/css/user.update.style.css}">
+    <link rel="stylesheet" type="text/css" href="static/css/user.update.style.css"
+          th:href="@{/css/user.update.style.css}">
 </head>
 <body>
 <div class="wrapper">
@@ -18,7 +19,7 @@
                 <input type="text" id="phone-number" name="phoneNumber" th:value="${customer.phoneNumber}">
                 <input type="text" id="city" name="city" th:value="${customer.city}">
                 <input type="text" id="street" name="street" th:value="${customer.street}">
-                <input type="text"  id="country" name="country" th:value="${customer.country}">
+                <input type="text" id="country" name="country" th:value="${customer.country}">
                 <input type="submit" value="Подтвердить изменения">
             </div>
         </form>
@@ -54,13 +55,13 @@
                 <td>
                     <form method="post" action="/user/paid-types/add">
                         <input class="input-field" type="hidden" id="name_add" name="name" th:value='${pt.name}'>
-                        <button type="submit">Добавить</button>
+                        <button type="submit" style="background-color: #4cae4c">Добавить</button>
                     </form>
                 </td>
                 <td>
                     <form method="post" action="/user/paid-types/del">
                         <input class="input-field" type="hidden" id="name_del" name="name" th:value='${pt.name}'>
-                        <button type="submit">Удалить</button>
+                        <button type="submit" style="background-color: #ac2925">Удалить</button>
                     </form>
                 </td>
             </tr>

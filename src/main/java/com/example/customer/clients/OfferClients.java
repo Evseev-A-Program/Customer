@@ -65,6 +65,14 @@ public class OfferClients {
         restTemplate.postForEntity(url, category, String.class);
     }
 
+    public static void delCategory(Long categoryId)
+    {
+        final String url = "http://localhost:8081/category/delete";
+        RestTemplate restTemplate = new RestTemplate();
+        Object category = categoryId;
+        restTemplate.postForEntity(url, category, String.class);
+    }
+
     public static List<Object> getCharacteristic()
     {
         final String url = "http://localhost:8081/characteristic/get/all";
@@ -134,20 +142,23 @@ public class OfferClients {
 
     public static void addCategoryFromOffer(Long offerId, Long categoryId)
     {
-        final String url = "http://localhost:8081/offer/add-category?id={1}&categoryId={2}";
+        final String url_сategory = "http://localhost:8081/offer/add-category?id={1}&categoryId={2}";
         RestTemplate restTemplate = new RestTemplate();
         Object offer = offerId;
         Object category = categoryId;
-        restTemplate.getForEntity(url, String.class, offer, category);
+        restTemplate.getForEntity(url_сategory, String.class, offer, category);
     }
 
-    public static void addCharacteristicFromOffer(Long offerId, Long characteristicId)
+    public static void addCharacteristicFromOffer(Long offerId, String characteristicName, String characteristicDescription)
     {
-        final String url = "http://localhost:8081/offer/add-characteristic?id={1}&characteristicId={2}";
+        final String url = "http://localhost:8081/offer/add-characteristic?" +
+                "id={1}&characteristicName={2}" +
+                "&characteristicDescription={3}";
         RestTemplate restTemplate = new RestTemplate();
         Object offer = offerId;
-        Object characteristic = characteristicId;
-        restTemplate.getForEntity(url, String.class, offer, characteristic);
+        Object characteristicNameObj = characteristicName;
+        Object characteristicDescObj = characteristicDescription;
+        restTemplate.getForEntity(url, String.class, offer, characteristicName, characteristicDescription);
     }
 
 }

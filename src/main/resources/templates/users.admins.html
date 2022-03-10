@@ -26,14 +26,14 @@
         <td th:utext="${customer.email}"></td>
         <div th:switch="${customer.active}">
             <td th:case="true">
-                <form method="post" action="/admin/banned">
+                <form method="post" action="/admin/get/banned">
                     <input class="input-field" type="hidden" id="id_ban" name="id" th:value='${customer.id}'>
                     <input class="input-field" type="hidden" id="search_ban" name="search" th:value="${search}">
                     <button type="submit" style="background-color: #ac2925">Заблокировать</button>
                 </form>
             </td>
             <td th:case="false">
-                <form method="post" action="/admin/unbanned">
+                <form method="post" action="/admin/get/unbanned">
                     <input class="input-field" type="hidden" id="id_unban" name="id" th:value='${customer.id}'>
                     <input class="input-field" type="hidden" id="search_unban" name="search" th:value="${search}">
                     <button type="submit" style="background-color: #4cae4c">Разблокировать</button>
@@ -42,12 +42,6 @@
         </div>
     </tr>
 </table>
-<script>
-    function change() {
-        var search = document.getElementById("search").value;
-        document.getElementById("search_ban").value = search;
-        document.getElementById("search_unban").value = search;
-    }
-</script>
+
 </body>
 </html>

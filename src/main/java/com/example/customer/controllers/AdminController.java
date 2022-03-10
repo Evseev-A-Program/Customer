@@ -4,6 +4,7 @@ import com.example.customer.clients.OfferClients;
 import com.example.customer.exception.CustomerNotFoundException;
 import com.example.customer.exception.PaidTypeLinkedToUserException;
 import com.example.customer.exception.PaidTypeNotFoundException;
+import com.example.customer.forms.OfferForm;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.transfer.OfferDTO;
@@ -52,7 +53,7 @@ public class AdminController {
         return "paid.types.admins";
     }
 
-    @PostMapping("/banned")
+    @PostMapping("/get/banned")
     public String CustomerBannedById(ModelMap model, Long id, String search) throws CustomerNotFoundException {
             customerService.BanCustomerById(id);
         model.addAttribute("customersFromServer", customerService.findCustomersByFistNameOfLastName(search));
@@ -60,7 +61,7 @@ public class AdminController {
         return "users.admins";
     }
 
-    @PostMapping("/unbanned")
+    @PostMapping("/get/unbanned")
     public String CustomerUnBannedById(ModelMap model, Long id, String search) throws CustomerNotFoundException {
             customerService.UnBanCustomerById(id);
         model.addAttribute("customersFromServer", customerService.findCustomersByFistNameOfLastName(search));
@@ -86,8 +87,15 @@ public class AdminController {
             return "redirect:/login";
         }
         model.addAttribute("categoriesFromServer", OfferClients.getCategory());
-        return "new.category";
+        return "category.admins";
     }
+
+    @PostMapping("/category/delete")
+    public String deleteCategoryById(Long id) throws PaidTypeLinkedToUserException, PaidTypeNotFoundException {
+        OfferClients.delCategory(id);
+        return "redirect:/admin/category";
+    }
+
 
     @PostMapping("/category")
     public String addCategory(ModelMap model, Authentication authentication, String name) {
@@ -116,22 +124,26 @@ public class AdminController {
         return "redirect:/admin/characteristic";
     }
 
-    @GetMapping("/offer")
+    @GetMapping("/offers")
     public String addOfferPage(ModelMap model, Authentication authentication) {
         if (authentication == null) {
             return "redirect:/login";
         }
-        model.addAttribute("offersFromServer", OfferClients.getOffers());
-        return "new.offer";
+        model.addAttribute("categoriesFromServer", OfferClients.getCategory());
+      //  model.addAttribute("offersFromServer", OfferClients.getOffers());
+        return "offers.admins";
     }
 
-    @PostMapping("/offer")
-    public String addOffer(ModelMap model, Authentication authentication, OfferDTO offerDTO) {
+    @PostMapping("/offers")
+    public String addOffer(ModelMap model, Authentication authentication, OfferForm offerForm) {
         if (authentication == null) {
             return "redirect:/login";
         }
-        OfferClients.addOffer(offerDTO);
-        return "redirect:/admin/offer";
+        OfferClients.addOffer(OfferDTO.fromDTO(offerForm));
+        OfferClients.addCharacteristicFromOffer(offerForm.getId(),
+                offerForm.getCharacteristicName(),
+                offerForm.getCharacteristicDescription());
+        return "redirect:/admin/offers";
     }
 
     @GetMapping("/offer-update")
@@ -155,40 +167,5 @@ public class AdminController {
         return "redirect:/admin/offer";
     }
 
-    @PostMapping("/offer-update/paid-type/add")
-    public String addPaidTypeFromOffer(ModelMap model, Authentication authentication, Long paidTypeId, Long offerId) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        OfferClients.addPaidType(offerId, paidTypeId);
-        return "redirect:/admin/offer-update?id=" + offerId;
-    }
-
-    @PostMapping("/offer-update/paid-type/del")
-    public String delPaidTypeFromOffer(ModelMap model, Authentication authentication, Long paidTypeId, Long offerId) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        OfferClients.delPaidType(offerId, paidTypeId);
-        return "redirect:/admin/offer-update?id=" + offerId;
-    }
-
-    @PostMapping("/offer-update/category")
-    public String addCategoryFromOffer(ModelMap model, Authentication authentication, Long categoryId, Long offerId) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        OfferClients.addCategoryFromOffer(offerId, categoryId);
-        return "redirect:/admin/offer-update?id=" + offerId;
-    }
-
-    @PostMapping("/offer-update/characteristic")
-    public String addCharacteristicFromOffer(ModelMap model, Authentication authentication, Long characteristicId, Long offerId) {
-        if (authentication == null) {
-            return "redirect:/login";
-        }
-        OfferClients.addCharacteristicFromOffer(offerId, characteristicId);
-        return "redirect:/admin/offer-update?id=" + offerId;
-    }
 
 }
