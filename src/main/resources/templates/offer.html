@@ -9,11 +9,11 @@
 <div class="col-sm-4">
     <div class="product">
         <div class="product-img">
-            <img th:src="${offer.image}">
+            <img width="200" height="200" th:src="${offer.image}">
         </div>
         <p class="product-title" th:utext="${offer.name}"></p>
         <p th:utext="${offer.price}" class="product-desc"></p>
-        <form action="/store/add" method="post" name="form">
+        <form action="/user/cart" method="get" name="form">
             <input class="input-field" type="hidden" id="offerId" name="offerId" th:value="${offer.id}">
             <button type="submit">В корзину</button>
         </form>

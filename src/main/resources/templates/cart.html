@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/css/store.style.css" th:href="@{/css/store.style.css}">
+</head>
+<body>
+<div class="container content">
+    <div class="row">
+        <ul>
+            <th:block th:each="order : ${ordersFromServer}">
+                <div class="product">
+<!--                    <div class="product-img">-->
+<!--                        <img width="200" height="200" th:src="${offer.image}">-->
+<!--                    </div>-->
+<!--                    <p th:utext="${offer.name}" href="/store/offer"></p>-->
+<!--                    <p th:utext="${offer.price}" class="product-desc"></p>-->
+<!--                    <p th:utext="${offer.characteristic.name}" class="product-desc"></p>-->
+<!--                    <p th:utext="${offer.category.name}" class="product-price"></p>-->
+
+                <p th:utext="${order.id}" class="product-price"></p>
+                </div>
+            </th:block>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.customer.controllers;
 
+import com.example.customer.clients.OfferClients;
 import com.example.customer.clients.OrderClients;
 import com.example.customer.exception.CustomerAlreadyExistException;
 import com.example.customer.exception.CustomerNotFoundException;
@@ -21,6 +22,8 @@ import utils.CustomerFromAuthentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -109,14 +112,26 @@ public class UserController {
     }
 
     @GetMapping("/cart")
-    public String getCart(ModelMap model, Authentication authentication) {
+    public String addOfferToCart(ModelMap model, Authentication authentication, Long offerId) {
         if (authentication == null) {
             return "redirect:/login";
         }
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
-        model.addAttribute("orders", OrderClients.getOrderByIdCustomer(details.getCustomer().getId()));
+        OrderClients.addOrder(details.getCustomer().getId(), offerId);
+        model.addAttribute("ordersFromServer", OrderClients.getOrderByIdCustomer(details.getCustomer().getId()));
         return "cart";
     }
+
+//    @GetMapping("/cart")
+//    public String getCart(ModelMap model, Authentication authentication) {
+//        if (authentication == null) {
+//            return "redirect:/login";
+//        }
+//        UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+//        OrderClients.addOrder(details.getCustomer().getId(), offerId);
+//        model.addAttribute("offersFromServer", OrderClients.getOrderByIdCustomer(details.getCustomer().getId()));
+//        return "cart";
+//    }
 
     @PostMapping("/cart/buy")
     public String buy(ModelMap model, Authentication authentication) {

@@ -1,16 +1,26 @@
 package com.example.customer.clients;
 
+import com.example.customer.forms.OfferForm;
 import com.example.customer.transfer.transfer.CategoryDTO;
 import com.example.customer.transfer.transfer.CharacteristicDTO;
 import com.example.customer.transfer.transfer.OfferDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
 import java.util.List;
 
+@AllArgsConstructor
 public class OfferClients {
+
+     private static final ObjectMapper mapper =  new ObjectMapper();
 
     public static boolean checkPaidType(Long id)
     {
@@ -123,12 +133,16 @@ public class OfferClients {
         restTemplate.getForEntity(url, String.class, offer, paidType);
     }
 
-    public static void addOffer(OfferDTO offerDTO)
-    {
-        final String url = "http://localhost:8081/offer/add";
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity(url, offerDTO, String.class);
+    public static void addOffer(OfferForm offerForm) throws JsonProcessingException {
 
+        Object categoryIdObj = offerForm.getCategoryId();
+        Object characteristicNameObj = offerForm.getCharacteristicName();
+        Object characteristicDescriptionObj = offerForm.getCharacteristicDescription();
+        final String url = "http://localhost:8081/offer/add?categoryId=" + categoryIdObj +
+                                                    "&characteristicName=" + characteristicNameObj +
+                                                    "&characteristicDescription=" + characteristicDescriptionObj;
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject(url, OfferDTO.fromDTO(offerForm), String.class);
     }
 
     public static void updateOffer(OfferDTO offerDTO)

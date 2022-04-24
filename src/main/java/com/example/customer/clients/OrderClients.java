@@ -32,6 +32,20 @@ public class OrderClients {
         return exchange.getBody();
     }
 
+
+    public static Object getIdOrdersByIdCustomer(Long id)
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        Object customerId = id;
+
+        final String url = "http://localhost:8082/orders/get_id_offers?customerId=" + customerId;
+
+        ParameterizedTypeReference<List<Object>> pr = new ParameterizedTypeReference<List<Object>>() {};
+        ResponseEntity<List<Object>> exchange = restTemplate.exchange(url, HttpMethod.GET, null, pr);
+
+        return exchange.getBody();
+    }
+
     public static void buyOrder(Long id)
     {
         RestTemplate restTemplate = new RestTemplate();

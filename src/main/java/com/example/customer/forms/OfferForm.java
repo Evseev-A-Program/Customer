@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class OfferForm {
 
-    private Long id;
+  //  private Long id;
 
     private String name;
 
@@ -18,8 +18,6 @@ public class OfferForm {
     private float price;
 
     private Long categoryId;
-
-    private String  categoryName;
 
     private String characteristicName;
 

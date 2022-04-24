@@ -8,6 +8,7 @@ import com.example.customer.forms.OfferForm;
 import com.example.customer.service.CustomerService;
 import com.example.customer.service.PaidTypeService;
 import com.example.customer.transfer.transfer.OfferDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -135,14 +136,14 @@ public class AdminController {
     }
 
     @PostMapping("/offers")
-    public String addOffer(ModelMap model, Authentication authentication, OfferForm offerForm) {
+    public String addOffer(ModelMap model, Authentication authentication, OfferForm offerForm) throws JsonProcessingException {
         if (authentication == null) {
             return "redirect:/login";
         }
-        OfferClients.addOffer(OfferDTO.fromDTO(offerForm));
-        OfferClients.addCharacteristicFromOffer(offerForm.getId(),
-                offerForm.getCharacteristicName(),
-                offerForm.getCharacteristicDescription());
+        OfferClients.addOffer(offerForm);
+//        OfferClients.addCharacteristicFromOffer(offerForm.getId(),
+//                offerForm.getCharacteristicName(),
+//                offerForm.getCharacteristicDescription());
         return "redirect:/admin/offers";
     }
 

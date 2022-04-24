@@ -15,25 +15,17 @@ import java.util.List;
 @Setter
 public class OfferDTO {
 
-    private Long id;
-
     private String name;
 
     private String image;
 
     private float price;
 
-    private Category category;
-
     public static OfferDTO fromDTO(OfferForm offerForm){
         return OfferDTO.builder()
                 .name(offerForm.getName())
                 .image(offerForm.getImage())
                 .price(offerForm.getPrice())
-                .category(Category.builder()
-                        .id(offerForm.getCategoryId())
-                        .name(offerForm.getCategoryName())
-                        .build())
                 .build();
     }
 
